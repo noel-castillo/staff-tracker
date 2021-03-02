@@ -7,12 +7,10 @@ export class Employee {
     constructor(
         id?: number,
         firstName?: string,
-        lastName?: string,
-        enabled?: boolean
+        lastName?: string
     ) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.enabled = enabled;
     }
 }
