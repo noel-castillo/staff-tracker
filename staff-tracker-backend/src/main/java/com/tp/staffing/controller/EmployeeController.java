@@ -11,6 +11,8 @@ import java.awt.print.Book;
 import java.util.List;
 
 @RestController
+@RequestMapping("api")
+@CrossOrigin({ "*", "http://localhost:4200" })
 public class EmployeeController {
     @Autowired
     EmployeeService service;
@@ -28,7 +30,7 @@ public class EmployeeController {
     }
 
     //Retrieves a list of all employees from the database.
-    @GetMapping("/employees/")
+    @GetMapping("/employees")
     public List<Employee> getEmployees() {
         return service.getEmployees();
     }
