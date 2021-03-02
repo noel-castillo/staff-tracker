@@ -5,16 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EmployeesComponent } from './components/employees/employees.component';
-import { EmployeeComponent } from './components/employee/employee.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { PositionsComponent } from './components/positions/positions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     EmployeesComponent,
-    EmployeeComponent
+    ScheduleComponent,
+    PositionsComponent
   ],
   imports: [
     BrowserModule,
