@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Position } from 'src/app/models/position';
+import { PositionService } from 'src/app/services/position.service';
 
 @Component({
   selector: 'app-positions',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PositionsComponent implements OnInit {
 
-  constructor() { }
+  positions : Position[];
+
+  constructor(private posService : PositionService) { }
 
   ngOnInit(): void {
+    this.posService.getAllPositions().subscribe(list => {
+      this.positions = list
+    });
   }
 
 }
