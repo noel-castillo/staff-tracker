@@ -16,6 +16,28 @@ export class PositionService {
 
   constructor(private http: HttpClient) { }
 
+  addEmployee(toAdd: Position): Observable<Position> {
+    return this.http.post<Position>(this.baseURL + "/add-position", toAdd, this.httpOptions)
+      .pipe(
+        tap(x => console.log(x)),
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
+  }
+
+  getPosition(id: number): Observable<Position> {
+    return this.http.get<Position>(this.baseURL + "/position/" + id)
+      .pipe(
+        tap(x => console.log(x)),
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
+  }
+
   getAllPositions(): Observable<Position[]> {
     return this.http.get<Position[]>(this.baseURL + "/positions")
       .pipe(
@@ -28,8 +50,19 @@ export class PositionService {
       );
   }
 
-  addEmployee(toAdd: Position): Observable<Position> {
-    return this.http.post<Position>(this.baseURL + "/add-position", toAdd, this.httpOptions)
+  editPosition(toEdit: Position): Observable<Position> {
+    return this.http.put<Position>(this.baseURL + "/positions/" + toEdit.id, toEdit, this.httpOptions)
+      .pipe(
+        tap(x => console.log(x)),
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
+  }
+
+  deletePosition(toDelete: Position): Observable<Position> {
+    return this.http.delete<Position>(this.baseURL + "/positions/delete/" + toDelete.id, this.httpOptions)
       .pipe(
         tap(x => console.log(x)),
         catchError(err => {
