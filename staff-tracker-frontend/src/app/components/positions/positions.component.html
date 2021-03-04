@@ -18,13 +18,13 @@
                                             Title
                                         </th>
                                         <th>
-                                            ---
+                                            Status
                                         </th>
                                         <th>
-                                            ---
+                                            Days
                                         </th>
                                         <th>
-                                            ---
+                                            Shift
                                         </th>
                                     </thead>
                                     <tbody>
@@ -45,9 +45,53 @@
                                             <td>
                                                 ---
                                             </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-warning">Edit&emsp;</button>
+
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button *ngIf="!addPosition" type="submit" class="btn btn-info pull-right" (click)="addPosition = true">Add Position</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
+
+                                <div *ngIf="addPosition" class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Title</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Days</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Shift</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addPosition = false">Submit New Position</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
