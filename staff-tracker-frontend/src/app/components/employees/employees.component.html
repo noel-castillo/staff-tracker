@@ -9,7 +9,9 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
+                                <button *ngIf="!(showAddEmployeeForm || showEditEmployeeForm)" type="submit" class="btn btn-info pull-right" (click)="showAddEmployeeForm = true">Add Employee</button>
+                                <table class="table" *ngIf="!(showAddEmployeeForm || showEditEmployeeForm)">
+
                                     <thead class=" text-info">
                                         <th>
                                             ID
@@ -46,49 +48,41 @@
                                                 address
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-warning">Edit&emsp;</button>
+                                                <button type="submit" class="btn btn-warning" (click)="showEdit(employee)">Edit&emsp;</button>
 
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <button *ngIf="!addEmployee" type="submit" class="btn btn-info pull-right" (click)="addEmployee = true">Add Employee</button>
+                                                <button type="submit" class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
 
-                                <!-- <button class="btn btn-primary form-inline" type="submit" (click)="search(searchForm)"
-          (click)="searchResult = true">
-          Search Now
-        </button> -->
-
-                                <div *ngIf="addEmployee" class="card-body">
+                                <div *ngIf="showAddEmployeeForm" class="card-body">
+                                    <button *ngIf="showAddEmployeeForm" type="submit" class="btn btn-danger pull-right" (click)="showAddEmployeeForm = false">Cancel</button>
+                                    <br>
                                     <form>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">First Name</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="firstName" [(ngModel)]="newEmployee.firstName">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Last Name</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="lastName" [(ngModel)]="newEmployee.lastName">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Email Address</label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="email" class="form-control" name="email" [(ngModel)]="newEmployee.email">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Phone</label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="email" class="form-control" name="phone" [(ngModel)]="newEmployee.phone">
                                                 </div>
                                             </div>
                                         </div>
@@ -96,32 +90,56 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Adress</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">City</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Country</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Postal Code</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="address" [(ngModel)]="newEmployee.address">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info pull-left" (click)="addEmployee = false">Submit New Employee</button>
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addEmployee()">Submit New Employee</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
+                                <div *ngIf="showEditEmployeeForm" class="card-body">
+                                    <button *ngIf="showEditEmployeeForm" type="submit" class="btn btn-danger pull-right" (click)="showEditEmployeeForm = false">Cancel</button>
+                                    <br>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">First Name</label>
+                                                    <input type="text" class="form-control" name="firstName" value="employeeToEdit.firstName" [(ngModel)]="employeeToEdit.firstName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Last Name</label>
+                                                    <input type="text" class="form-control" name="lastName" value="employeeToEdit.lastName" [(ngModel)]="employeeToEdit.lastName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Email Address</label>
+                                                    <input type="email" class="form-control" name="email" value="employeeToEdit.email" [(ngModel)]="employeeToEdit.email">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Phone</label>
+                                                    <input type="email" class="form-control" name="phone" value="employeeToEdit.phone" [(ngModel)]="employeeToEdit.phone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Adress</label>
+                                                    <input type="text" class="form-control" name="address" value="employeeToEdit.address" [(ngModel)]="employeeToEdit.address">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="editEmployee()">Submit Edit</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
