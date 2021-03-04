@@ -10,6 +10,7 @@ import { PositionService } from 'src/app/services/position.service';
 export class PositionsComponent implements OnInit {
 
   positions : Position[];
+  addPosition : boolean = false;
 
   constructor(private posService : PositionService) { }
 
