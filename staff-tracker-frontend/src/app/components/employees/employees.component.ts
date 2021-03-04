@@ -25,6 +25,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   addEmployee(): void {
+    this.newEmployee.enabled = true;
     console.log(this.newEmployee);
     this.showAddEmployeeForm = false;
     this.empService.addEmployee(this.newEmployee).subscribe(

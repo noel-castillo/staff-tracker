@@ -9,7 +9,8 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table">
+                                <button *ngIf="!(showAddPositionForm || showEditPositionForm)" type="submit" class="btn btn-info pull-right" (click)="showAddPositionForm = true">Add Position</button>
+                                <table class="table" *ngIf="!(showAddPositionForm || showEditPositionForm)">
                                     <thead class=" text-info">
                                         <th>
                                             ID
@@ -53,19 +54,29 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <button *ngIf="!addPosition" type="submit" class="btn btn-info pull-right" (click)="addPosition = true">Add Position</button>
+                                                <button *ngIf="!showAddPositionForm" type="submit" class="btn btn-info pull-right" (click)="showAddPositionForm = true">Add Position</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
 
-                                <div *ngIf="addPosition" class="card-body">
+                                <div *ngIf="showAddPositionForm" class="card-body">
+                                    <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = false">Cancel</button>
+                                    <br>
                                     <form>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Title</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="title" [(ngModel)]="newPosition.title">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Status</label>
+                                                    <input type="text" class="form-control" name="status" [(ngModel)]="newPosition.status">
                                                 </div>
                                             </div>
                                         </div>
@@ -73,21 +84,72 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Days</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" class="form-control" name="days" [(ngModel)]="newPosition.days">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Shift</label>
-                                                    <input type="text" class="form-control">
+                                                    <label class="bmd-label-floating">Start Time</label>
+                                                    <input type="text" class="form-control" name="startTime" [(ngModel)]="newPosition.startTime">
                                                 </div>
                                             </div>
-
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Time</label>
+                                                    <input type="text" class="form-control" name="endTime" [(ngModel)]="newPosition.endTime">
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info pull-left" (click)="addPosition = false">Submit New Position</button>
+                                        <button type="submit" class="btn btn-info pull-left" (click)="showAddPositionForm = false">Submit New Position</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
+                                <div *ngIf="showEditPositionForm" class="card-body">
+                                    <button *ngIf="showEditPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showEditPositionForm = false">Cancel</button>
+                                    <br>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Title</label>
+                                                    <input type="text" class="form-control" name="title" value="positionToEdit.title" [(ngModel)]="positionToEdit.title">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Status</label>
+                                                    <input type="text" class="form-control" name="status" value="positionToEdit.status" [(ngModel)]="positionToEdit.status">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Days</label>
+                                                    <input type="email" class="form-control" name="days" value="positionToEdit.days" [(ngModel)]="positionToEdit.days">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Start Time</label>
+                                                    <input type="email" class="form-control" name="startTime" value="positionToEdit.startTime" [(ngModel)]="positionToEdit.startTime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Time</label>
+                                                    <input type="text" class="form-control" name="endTime" value="positionToEdit.endTime" [(ngModel)]="positionToEdit.endTime">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="editPosition()">Submit Edit</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
