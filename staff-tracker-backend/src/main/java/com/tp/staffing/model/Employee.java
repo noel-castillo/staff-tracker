@@ -8,6 +8,10 @@ public class Employee {
     private Integer id;     //Primary Key, Cannot be null
     public String firstName; //Cannot be null
     public String lastName; //Cannot be null
+    public String email; //Can be null
+    public String phone; //Can be null
+    public String address; //Can be null
+    public boolean enabled; //Set to true upon being added to database
 
     // C O N S T R U C T O R S
 
@@ -60,4 +64,35 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }
