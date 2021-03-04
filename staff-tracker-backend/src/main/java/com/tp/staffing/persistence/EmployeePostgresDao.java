@@ -23,15 +23,19 @@ public class EmployeePostgresDao implements EmployeeDAO {
     @Override //Adds an employee to the database and returns it's id.
     public Integer addEmployee(Employee employee) {
 
-        return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\")" +
-                "VALUES ( '" + employee.getFirstName() + "', '" + employee.getLastName() + "') " +
+        return template.query("INSERT INTO public.\"Employee\"(\"firstName\", \"lastName\", " +
+                "\"email\", \"phone\", \"address\", \"enabled\")" +
+                "VALUES ( '" + employee.getFirstName() + "', '" + employee.getLastName() + "', '" +
+                employee.getEmail() + "', '" + employee.getPhone() + "', '" + employee.getAddress() +
+                "', '" + employee.isEnabled() + "')" +
                 "RETURNING \"id\";", new IdMapper()).get(0);
 
     }
 
     @Override //Returns an employee from the database. Returns null if not found by given id.
     public Employee getEmployeeById(Integer id) {
-        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                "\"email\", \"phone\", \"address\", \"enabled\"" +
                 "\tFROM public.\"Employee\"\n" +
                 "\t\tWHERE \"id\" = '" + id + "';", new EmployeeMapper());
 
@@ -44,7 +48,8 @@ public class EmployeePostgresDao implements EmployeeDAO {
 
     @Override //Returns a list of employees with the given last name to check for.
     public List<Employee> getEmployeesByLastName(String lastName) {
-        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                "\"email\", \"phone\", \"address\", \"enabled\"" +
                 "\tFROM public.\"Employee\"\n" +
                 "\t\tWHERE \"lastName\" = '" + lastName + "';", new EmployeeMapper());
 
@@ -57,7 +62,8 @@ public class EmployeePostgresDao implements EmployeeDAO {
 
     @Override //Returns a list of all employees in the database.
     public List<Employee> getEmployees() {
-        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                "\"email\", \"phone\", \"address\", \"enabled\"" +
                 "\tFROM public.\"Employee\"\n;", new EmployeeMapper());
 
         if (employees.isEmpty()) {
@@ -74,7 +80,11 @@ public class EmployeePostgresDao implements EmployeeDAO {
         } else {
             template.execute("UPDATE public.\"Employee\"\n" +
                     "SET \"firstName\"='" + updatedEmployee.getFirstName() + "', " +
-                    "\"lastName\" ='" + updatedEmployee.getLastName() + "'\n" +
+                    "\"lastName\" ='" + updatedEmployee.getLastName() + "'," +
+                    "\"email\" ='" + updatedEmployee.getEmail() + "'," +
+                    "\"phone\" ='" + updatedEmployee.getPhone() + "'," +
+                    "\"address\" ='" + updatedEmployee.getAddress() + "'," +
+                    "\"enabled\" ='" + updatedEmployee.isEnabled() + "'" +
                     "WHERE \"id\" = " + id + ";");
             return true;
         }
