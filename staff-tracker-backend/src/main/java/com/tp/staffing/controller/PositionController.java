@@ -2,7 +2,6 @@ package com.tp.staffing.controller;
 
 
 import com.tp.staffing.exceptions.*;
-import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
 import com.tp.staffing.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin({ "*", "http://localhost:4200" })
+@CrossOrigin(origins="http://localhost:4200")
 public class PositionController {
     @Autowired
     PositionService service;

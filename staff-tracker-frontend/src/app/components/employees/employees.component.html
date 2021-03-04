@@ -39,18 +39,18 @@
                                                 {{employee.firstName}} {{employee.lastName}}
                                             </td>
                                             <td>
-                                                email
+                                                {{employee.email}}
                                             </td>
                                             <td>
-                                                phone
+                                                {{employee.phone}}
                                             </td>
                                             <td>
-                                                address
+                                                {{employee.address}}
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-warning" (click)="showEdit(employee)">Edit&emsp;</button>
 
-                                                <button type="submit" class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
+                                                <button type="submit" class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
                                             </td>
                                         </tr>
                                     </tbody>

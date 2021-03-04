@@ -11,13 +11,13 @@ import { of } from 'rxjs';
 export class EmployeeService {
 
   baseURL: string = "http://localhost:8080/api";
-  httpOptions = { headers: new HttpHeaders({ "Content-Type": "application/json", "Access-Control-Allow-Methods": "any" }) }
+  httpOptions = { headers: new HttpHeaders({ "Content-Type": "application/json"}) };
 
 
   constructor(private http: HttpClient) { }
 
   addEmployee(toAdd: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.baseURL + "/add-employee", toAdd, this.httpOptions)
+    return this.http.post<Employee>(this.baseURL + "/employees/add-employee", toAdd, this.httpOptions)
       .pipe(
         tap(x => console.log(x)),
         catchError(err => {
@@ -51,7 +51,7 @@ export class EmployeeService {
   }
 
   editEmployee(employee: Employee, id: number): Observable<Employee> {
-    return this.http.put<Employee>(this.baseURL + "/employee/" + id, employee, this.httpOptions)
+    return this.http.put<Employee>(this.baseURL + "/employees/" + id, employee, this.httpOptions)
       .pipe(
         tap(x => console.log(x)),
         catchError(err => {
