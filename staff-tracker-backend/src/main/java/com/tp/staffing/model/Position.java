@@ -10,8 +10,8 @@ public class Position {
     private Integer id; //Primary Key, Cannot be null
     private String title; //Cannot be null
     private Integer employeeId; //Foreign Key, can be null
-    private String startTime; //Can be null
-    private String endTime; //Can be null
+    private int startTime; //Can be null
+    private int endTime; //Can be null
 
 
     // C O N S T R U C T O R S
@@ -62,19 +62,19 @@ public class Position {
         this.employeeId = employeeId;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 }

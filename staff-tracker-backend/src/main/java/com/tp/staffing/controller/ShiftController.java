@@ -1,9 +1,12 @@
 package com.tp.staffing.controller;
 
 
-import com.tp.staffing.exceptions.*;
-import com.tp.staffing.model.Position;
-import com.tp.staffing.service.PositionService;
+import com.tp.staffing.exceptions.InvalidShiftIdException;
+import com.tp.staffing.exceptions.NullShiftIdException;
+import com.tp.staffing.exceptions.NullShiftNameException;
+import com.tp.staffing.exceptions.NullShiftTimeException;
+import com.tp.staffing.model.Shift;
+import com.tp.staffing.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,76 +14,48 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ShiftController {
     @Autowired
-    PositionService service;
+    ShiftService service;
 
-    //Adds a new position to the database by the given position. Title cannot be null or empty.
-    @PostMapping("/positions/add-position")
-    public Integer addPosition(@RequestBody Position position) throws NullPositionTitleException, InvalidPositionTitleException {
-        return service.addPosition(position);
+    //Adds a new shift to the database by the given shift. name/startTime/endTime cannot be null.
+    @PostMapping("/shifts/add-shift")
+    public Integer addShift(@RequestBody Shift shift) throws NullShiftNameException, NullShiftTimeException {
+        return service.addShift(shift);
     }
 
-    //Retrieves a position from the database by the given id.
-    @GetMapping("/position/{id}")
-    public Position getPositionById(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
-        return service.getPositionById(id);
+    //Retrieves a Shift from the database by the given id.
+    @GetMapping("/shifts/{id}")
+    public Shift getShiftById(@PathVariable Integer id) throws NullShiftIdException, InvalidShiftIdException {
+        return service.getShiftById(id);
     }
 
-    //Retrieves a list of positions by the given title from the database. Title cannot be null or empty.
-    @GetMapping("/positions/{title}")
-    public List<Position> getPositionsByTitle(@PathVariable String title) throws NullPositionTitleException, InvalidPositionTitleException {
-        return service.getPositionsByTitle(title);
+    //Retrieves a list of all Shifts in the database.
+    @GetMapping("/shifts")
+    public List<Shift> getShifts() {
+        return service.getShifts();
     }
 
-    //Retrieves a list of all positions in the database.
-    @GetMapping("/positions")
-    public List<Position> getPositions() {
-        return service.getPositions();
-    }
-
-    //Edits an existing position in the database by replacing it's attributes with the
-    //attributes of the given position. This is done on the position with the given id.
-    @PutMapping("/positions/{id}")
-    public String editPosition(@PathVariable Integer id, @RequestBody Position position) throws InvalidPositionTitleException, NullPositionTitleException, InvalidPositionIdException {
-        if (service.editPosition(id, position)) {
-            return "Position " + id + " updated";
+    //Edits an existing Shift in the database by replacing it's attributes with the
+    //attributes of the given Shift. This is done on the Shift with the given id.
+    @PutMapping("/shifts/{id}")
+    public String editShift(@PathVariable Integer id, @RequestBody Shift shift) throws NullShiftNameException, NullShiftTimeException {
+        if (service.editShift(id, shift)) {
+            return "Shift " + id + " updated";
         } else {
-            return "Position " + id + " not found";
+            return "Shift " + id + " not found";
         }
 
     }
 
-    //Deletes an existing position row from the database.
-    @DeleteMapping("/positions/delete/{id}")
-    public String deletePosition(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
-        if (service.deletePosition(id)) {
-            return "Position " + id + " deleted";
+    //Deletes an existing Shift row from the database.
+    @DeleteMapping("/Shifts/delete/{id}")
+    public String deleteShift(@PathVariable Integer id) throws NullShiftIdException, InvalidShiftIdException {
+        if (service.deleteShift(id)) {
+            return "Shift " + id + " deleted";
         } else {
-            return "Position " + id + " not found";
+            return "Shift " + id + " not found";
         }
     }
-
-    //Assigns an employee's id to the foreign key variable to the corresponding position row based on
-    //the given position id.
-    @PutMapping("/employee/{employeeId}/position/{positionId}")
-    public String addEmployeeToPosition(@PathVariable Integer employeeId, @PathVariable Integer positionId) throws NullEmployeeIdException, NullPositionIdException, InvalidPositionIdException {
-        if (service.addEmployeeToPosition(employeeId, positionId)) {
-            return "Employee " + employeeId + " has taken Position " + positionId;
-        } else {
-            return "Unable to locate associated Employee " + employeeId + " or Position " + positionId;
-        }
-    }
-
-    //Removes any existing employeeId from the position row for a given position id.
-    @PutMapping("/position/{id}/clear")
-    public String removeEmployeeFromPosition(@PathVariable Integer id) throws InvalidPositionIdException, NullPositionIdException {
-        if (service.removeEmployeeFromPosition(id)) {
-            return "Position " + id + " is now vacant.";
-        } else {
-            return "Unable to locate associated Position " + id + ".";
-        }
-    }
-
 }
