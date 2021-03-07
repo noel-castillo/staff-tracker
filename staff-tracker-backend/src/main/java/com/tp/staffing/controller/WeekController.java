@@ -2,85 +2,77 @@ package com.tp.staffing.controller;
 
 
 import com.tp.staffing.exceptions.*;
-import com.tp.staffing.model.Position;
-import com.tp.staffing.service.PositionService;
+import com.tp.staffing.model.Week;
+import com.tp.staffing.service.WeekService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class WeekController {
     @Autowired
-    PositionService service;
+    WeekService service;
 
-    //Adds a new position to the database by the given position. Title cannot be null or empty.
-    @PostMapping("/positions/add-position")
-    public Integer addPosition(@RequestBody Position position) throws NullPositionTitleException, InvalidPositionTitleException {
-        return service.addPosition(position);
+
+    //Adds a new week to the database by the given Week. Dates cannot be null.
+    @PostMapping("/weeks/add-week")
+    public Integer addWeek(@RequestBody Week week) throws NullWeekStartDateException, NullWeekEndDateException {
+        return service.addWeek(week);
     }
 
-    //Retrieves a position from the database by the given id.
-    @GetMapping("/position/{id}")
-    public Position getPositionById(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
-        return service.getPositionById(id);
+    //Retrieves a week from the database by the given id.
+    @GetMapping("/weeks/{id}")
+    public Week getWeekById(@PathVariable Integer id) {
+        return service.getWeekById(id);
     }
 
-    //Retrieves a list of positions by the given title from the database. Title cannot be null or empty.
-    @GetMapping("/positions/{title}")
-    public List<Position> getPositionsByTitle(@PathVariable String title) throws NullPositionTitleException, InvalidPositionTitleException {
-        return service.getPositionsByTitle(title);
+    //Retrieves a list of weeks by the given start date from the database. Date cannot be null.
+    @GetMapping("/weeks/start/{startDate}")
+    public List<Week> getWeeksByStartDate(@PathVariable LocalDate startDate) {
+        return service.getWeeksByStartDate(startDate);
     }
 
-    //Retrieves a list of all positions in the database.
-    @GetMapping("/positions")
-    public List<Position> getPositions() {
-        return service.getPositions();
+    //Retrieves a list of weeks by the given end date from the database. Date cannot be null.
+    @GetMapping("/weeks/end/{endDate}")
+    public List<Week> getWeeksByEndDate(@PathVariable LocalDate endDate) {
+        return service.getWeeksByEndDate(endDate);
     }
 
-    //Edits an existing position in the database by replacing it's attributes with the
-    //attributes of the given position. This is done on the position with the given id.
-    @PutMapping("/positions/{id}")
-    public String editPosition(@PathVariable Integer id, @RequestBody Position position) throws InvalidPositionTitleException, NullPositionTitleException, InvalidPositionIdException {
-        if (service.editPosition(id, position)) {
-            return "Position " + id + " updated";
+    //Retrieves a list of weeks by the given end date from the database. Date cannot be null.
+    @GetMapping("/weeks/contains/{date}")
+    public List<Week> getWeeksByDate(@PathVariable LocalDate date) {
+        return service.getWeeksByDate(date);
+    }
+
+    //Retrieves a list of all Weeks in the database.
+    @GetMapping("/weeks")
+    public List<Week> getWeeks() {
+        return service.getWeeks();
+    }
+
+    //Edits an existing Week in the database by replacing it's attributes with the
+    //attributes of the given Week. This is done on the Week with the given id.
+    @PutMapping("/weeks/{id}")
+    public String editWeek(@PathVariable Integer id, @RequestBody Week week) {
+        if (service.editWeek(id, week)) {
+            return "Week " + id + " updated";
         } else {
-            return "Position " + id + " not found";
+            return "Week " + id + " not found";
         }
 
     }
 
-    //Deletes an existing position row from the database.
-    @DeleteMapping("/positions/delete/{id}")
-    public String deletePosition(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {
-        if (service.deletePosition(id)) {
-            return "Position " + id + " deleted";
+    //Deletes an existing week row from the database.
+    @DeleteMapping("/weeks/delete/{id}")
+    public String deleteWeek(@PathVariable Integer id) {
+        if (service.deleteWeek(id)) {
+            return "Week " + id + " deleted";
         } else {
-            return "Position " + id + " not found";
+            return "Week " + id + " not found";
         }
     }
-
-    //Assigns an employee's id to the foreign key variable to the corresponding position row based on
-    //the given position id.
-    @PutMapping("/employee/{employeeId}/position/{positionId}")
-    public String addEmployeeToPosition(@PathVariable Integer employeeId, @PathVariable Integer positionId) throws NullEmployeeIdException, NullPositionIdException, InvalidPositionIdException {
-        if (service.addEmployeeToPosition(employeeId, positionId)) {
-            return "Employee " + employeeId + " has taken Position " + positionId;
-        } else {
-            return "Unable to locate associated Employee " + employeeId + " or Position " + positionId;
-        }
-    }
-
-    //Removes any existing employeeId from the position row for a given position id.
-    @PutMapping("/position/{id}/clear")
-    public String removeEmployeeFromPosition(@PathVariable Integer id) throws InvalidPositionIdException, NullPositionIdException {
-        if (service.removeEmployeeFromPosition(id)) {
-            return "Position " + id + " is now vacant.";
-        } else {
-            return "Unable to locate associated Position " + id + ".";
-        }
-    }
-
 }

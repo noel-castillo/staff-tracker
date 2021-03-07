@@ -12,6 +12,7 @@ public class Employee {
     public String phone; //Can be null
     public String address; //Can be null
     public boolean enabled; //Set to true upon being added to database
+    public String[] days;
 
     // C O N S T R U C T O R S
 
@@ -94,5 +95,13 @@ public class Employee {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String[] getDays() {
+        return days;
+    }
+
+    public void setDays(String[] days) {
+        this.days = days;
     }
 }
