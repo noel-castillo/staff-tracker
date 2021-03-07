@@ -1,21 +1,18 @@
-export class Position {
+export class Shift {
+
     id: number;
-    title: string;
-    employeeId: number;
+    name: string;
     startTime: number;
     endTime: number;
 
     constructor(
         id?: number,
-        title?: string,
-        employeeId?: number,
+        name?: string,
         startTime?: number,
         endTime?: number
-
     ) {
         this.id = id;
-        this.title = title;
-        this.employeeId = employeeId;
+        this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
     }
