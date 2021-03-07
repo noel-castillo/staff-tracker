@@ -24,7 +24,6 @@ export class PositionsComponent implements OnInit {
   }
 
   addPosition(): void {
-    this.newPosition.enabled = true;
     console.log(this.newPosition);
     this.showAddPositionForm = false;
     this.posService.addPosition(this.newPosition).subscribe(
