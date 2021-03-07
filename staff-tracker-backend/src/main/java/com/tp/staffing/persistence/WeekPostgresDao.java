@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -22,47 +23,73 @@ public class WeekPostgresDao implements WeekDAO {
     public Integer addWeek(Week week) {
 
         return template.query("INSERT INTO public.\"Week\"(\"startDate\", \"endDate\")" +
-                "VALUES ( '" + week.getStartDate() + "', '"  + week.getEndDate() + "') " +
+                "VALUES ( '" + week.getStartDate() + "', '" + week.getEndDate() + "') " +
                 "RETURNING \"id\";", new IdMapper()).get(0);
     }
 
     @Override //Returns a Week from the database with the given id.
     // Or returns null if no Weeks are found with the given id.
     public Week getWeekById(Integer id) {
-        List<Week> Weeks = template.query("SELECT * " +
+        List<Week> weeks = template.query("SELECT * " +
                 "\tFROM public.\"Week\"\n" +
                 "\t\tWHERE \"id\" = '" + id + "';", new WeekMapper());
 
-        if (Weeks.isEmpty()) {
+        if (weeks.isEmpty()) {
             return null;
         }
 
-        return Weeks.get(0);
+        return weeks.get(0);
     }
 
     @Override //Returns a list of all Weeks in the database.
     public List<Week> getWeeks() {
-        List<Week> Weeks = template.query("SELECT * " +
+        List<Week> weeks = template.query("SELECT * " +
                 "\tFROM public.\"Week\"\n;", new WeekMapper());
 
-        if (Weeks.isEmpty()) {
+        if (weeks.isEmpty()) {
             return null;
         }
 
-        return Weeks;
+        return weeks;
     }
 
-    @Override //Returns a list of all Weeks in the database with the given title.
-    public List<Week> getWeeksByTitle(String title) {
-        List<Week> Weeks = template.query("SELECT * " +
+    @Override //Returns a list of all Weeks in the database with the given date.
+    public List<Week> getWeeksByStartDate(LocalDate date) {
+        List<Week> weeks = template.query("SELECT * " +
                 "\tFROM public.\"Week\"\n" +
-                "\t\tWHERE \"title\" = '" + title + "';", new WeekMapper());
+                "\t\tWHERE \"startDate\" = '" + date + "';", new WeekMapper());
 
-        if (Weeks.isEmpty()) {
+        if (weeks.isEmpty()) {
             return null;
         }
 
-        return Weeks;
+        return weeks;
+    }
+
+    @Override //Returns a list of all Weeks in the database with the given date.
+    public List<Week> getWeeksByEndDate(LocalDate date) {
+        List<Week> weeks = template.query("SELECT * " +
+                "\tFROM public.\"Week\"\n" +
+                "\t\tWHERE \"endDate\" = '" + date + "';", new WeekMapper());
+
+        if (weeks.isEmpty()) {
+            return null;
+        }
+
+        return weeks;
+    }
+
+    @Override //Returns a list of all Weeks in the database with the given date.
+    public List<Week> getWeeksByContainsDate(LocalDate date) {
+        List<Week> weeks = template.query("SELECT * " +
+                "\tFROM public.\"Week\"\n" +
+                "\t\tWHERE \"startDate\" = '" + date + "';", new WeekMapper());
+
+        if (weeks.isEmpty()) {
+            return null;
+        }
+
+        return weeks;
     }
 
     @Override //Returns true or false if updating a Week was successful.
@@ -71,9 +98,8 @@ public class WeekPostgresDao implements WeekDAO {
             return false;
         } else {
             template.execute("UPDATE public.\"Week\" " +
-                    "SET \"title\"='" + updatedWeek.getTitle() +
-                    "', \"startTime\"='" + updatedWeek.getStartTime() +
-                    "', \"endTime\"='" + updatedWeek.getEndTime() + "' " +
+                    "SET \"startDate\"='" + updatedWeek.getStartDate() +
+                    "', \"endDate\"='" + updatedWeek.getEndDate() + "' " +
                     "WHERE \"id\" = " + id + ";");
             return true;
         }
@@ -91,41 +117,5 @@ public class WeekPostgresDao implements WeekDAO {
         }
     }
 
-    @Override //Adds an employee id to a Week entity. Returns true or false if successful.
-    public boolean addEmployeeToWeek(Integer employeeId, Integer WeekId) {
 
-        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
-                "\tFROM public.\"Employee\"\n" +
-                "\t\tWHERE \"id\" = '" + employeeId + "';", new EmployeeMapper());
-        if (employees.isEmpty()) {
-            return false;
-        }
-
-        if (getWeekById(WeekId) == null) {
-            return false;
-        } else {
-            template.execute("UPDATE public.\"Week\"\n" +
-                    "SET \"employeeId\"='" + employeeId + "'\n" +
-                    "WHERE \"id\" = " + WeekId + ";");
-            return true;
-        }
-
-    }
-
-    @Override //Removes an employee id from a Week. Returns true or false if successful.
-    public boolean removeEmployeeFromWeek(Integer WeekId) {
-
-        if (getWeekById(WeekId) == null) {
-            return false;
-        } else {
-            template.execute("UPDATE public.\"Week\"\n" +
-                    "SET \"employeeId\"=null\n" +
-                    "WHERE \"id\" = " + WeekId + ";");
-            return true;
-        }
-
-    }
-
-    //Need methods to implement adding days to a Week. There is a WeekDay bridge table.
-    //Pre
 }

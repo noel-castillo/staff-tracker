@@ -26,26 +26,26 @@ public class WeekController {
 
     //Retrieves a week from the database by the given id.
     @GetMapping("/weeks/{id}")
-    public Week getWeekById(@PathVariable Integer id) {
+    public Week getWeekById(@PathVariable Integer id) throws InvalidWeekIdException {
         return service.getWeekById(id);
     }
 
     //Retrieves a list of weeks by the given start date from the database. Date cannot be null.
     @GetMapping("/weeks/start/{startDate}")
-    public List<Week> getWeeksByStartDate(@PathVariable LocalDate startDate) {
+    public List<Week> getWeeksByStartDate(@PathVariable LocalDate startDate) throws NullWeekStartDateException {
         return service.getWeeksByStartDate(startDate);
     }
 
     //Retrieves a list of weeks by the given end date from the database. Date cannot be null.
     @GetMapping("/weeks/end/{endDate}")
-    public List<Week> getWeeksByEndDate(@PathVariable LocalDate endDate) {
+    public List<Week> getWeeksByEndDate(@PathVariable LocalDate endDate) throws NullWeekEndDateException {
         return service.getWeeksByEndDate(endDate);
     }
 
     //Retrieves a list of weeks by the given end date from the database. Date cannot be null.
     @GetMapping("/weeks/contains/{date}")
-    public List<Week> getWeeksByDate(@PathVariable LocalDate date) {
-        return service.getWeeksByDate(date);
+    public List<Week> getWeeksByContainsDate(@PathVariable LocalDate date) throws NullDateException {
+        return service.getWeeksByContainsDate(date);
     }
 
     //Retrieves a list of all Weeks in the database.
@@ -57,7 +57,7 @@ public class WeekController {
     //Edits an existing Week in the database by replacing it's attributes with the
     //attributes of the given Week. This is done on the Week with the given id.
     @PutMapping("/weeks/{id}")
-    public String editWeek(@PathVariable Integer id, @RequestBody Week week) {
+    public String editWeek(@PathVariable Integer id, @RequestBody Week week) throws InvalidWeekIdException, NullWeekEndDateException, NullWeekStartDateException {
         if (service.editWeek(id, week)) {
             return "Week " + id + " updated";
         } else {
@@ -68,7 +68,7 @@ public class WeekController {
 
     //Deletes an existing week row from the database.
     @DeleteMapping("/weeks/delete/{id}")
-    public String deleteWeek(@PathVariable Integer id) {
+    public String deleteWeek(@PathVariable Integer id) throws NullWeekIdException, InvalidWeekIdException {
         if (service.deleteWeek(id)) {
             return "Week " + id + " deleted";
         } else {
