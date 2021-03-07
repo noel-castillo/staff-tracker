@@ -1,6 +1,7 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Day;
+import com.tp.staffing.model.Week;
 import com.tp.staffing.persistence.mappers.IdMapper;
 import com.tp.staffing.persistence.mappers.DayMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -53,15 +55,19 @@ public class DayPostgresDao implements DayDAO {
 
     @Override //Returns a list of all Days in the database within the given date range.
     public List<Day> getDaysByRange(LocalDate startDate, LocalDate endDate) {
-        List<Day> Days = template.query("SELECT * " +
-                "\tFROM public.\"Day\"\n" +
-                "\t\tWHERE \"date\" = '" + startDate + "';", new DayMapper());
+        List<Day> days = getDays();
+        List<Day> daysToReturn = new ArrayList<>();
+        for(Day day : days){
+            if(day.getDate().compareTo(startDate) >= 0 && day.getDate().compareTo(endDate) <= 0){
+                daysToReturn.add(day);
+            }
+        }
 
-        if (Days.isEmpty()) {
+        if (daysToReturn.isEmpty()) {
             return null;
         }
 
-        return Days;
+        return daysToReturn;
     }
 
     @Override //Returns true or false if updating a Day was successful.

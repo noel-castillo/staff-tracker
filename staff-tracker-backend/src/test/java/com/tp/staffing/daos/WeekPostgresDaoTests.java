@@ -82,6 +82,42 @@ class WeekPostgresDaoTests {
         assertEquals(LocalDate.of(2021, 3, 13), weekToCheck.get(0).getEndDate());
     }
 
+    @Test //Testing method to retrieve all Weeks from the database with a given start date. Golden path.
+    public void getWeeksByStartDateGoldenPath() {
+        List<Week> weekToCheck = toTest.getWeeksByStartDate(LocalDate.of(2021, 3, 7));
+
+        assertEquals(1, weekToCheck.get(0).getId());
+        assertEquals(LocalDate.of(2021, 3, 7), weekToCheck.get(0).getStartDate());
+        assertEquals(LocalDate.of(2021, 3, 13), weekToCheck.get(0).getEndDate());
+    }
+
+    @Test //Testing method to retrieve all Weeks from the database with a given end date. Golden path.
+    public void getWeeksByEndDateGoldenPath() {
+        List<Week> weekToCheck = toTest.getWeeksByEndDate(LocalDate.of(2021, 3, 13));
+
+        assertEquals(1, weekToCheck.get(0).getId());
+        assertEquals(LocalDate.of(2021, 3, 7), weekToCheck.get(0).getStartDate());
+        assertEquals(LocalDate.of(2021, 3, 13), weekToCheck.get(0).getEndDate());
+    }
+
+    @Test //Testing method to retrieve all Weeks from the database that contain a given date. Golden path.
+    public void getWeeksByContainsDateGoldenPath() {
+        List<Week> weekToCheck = toTest.getWeeksByContainsDate(LocalDate.of(2021, 3, 10));
+
+        assertEquals(1, weekToCheck.get(0).getId());
+        assertEquals(LocalDate.of(2021, 3, 7), weekToCheck.get(0).getStartDate());
+        assertEquals(LocalDate.of(2021, 3, 13), weekToCheck.get(0).getEndDate());
+
+        weekToCheck = toTest.getWeeksByContainsDate(LocalDate.of(2021, 3, 17));
+        assertNull(weekToCheck);
+    }
+
+    @Test //Testing method to retrieve all Weeks from the database that contain a given date. Golden path.
+    public void getWeeksByContainsDateInvalidDatePath() {
+        List<Week> weekToCheck = toTest.getWeeksByContainsDate(LocalDate.of(2021, 3, 17));
+        assertNull(weekToCheck);
+    }
+
 
     @Test //Testing method to update an existing Week in the database
     // by a given Week and corresponding id. Golden path.

@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -81,15 +82,19 @@ public class WeekPostgresDao implements WeekDAO {
 
     @Override //Returns a list of all Weeks in the database with the given date.
     public List<Week> getWeeksByContainsDate(LocalDate date) {
-        List<Week> weeks = template.query("SELECT * " +
-                "\tFROM public.\"Week\"\n" +
-                "\t\tWHERE \"startDate\" = '" + date + "';", new WeekMapper());
+        List<Week> weeks = getWeeks();
+        List<Week> weeksToReturn = new ArrayList<>();
+        for(Week week : weeks){
+            if(week.getStartDate().compareTo(date) <= 0 && week.getEndDate().compareTo(date) >= 0){
+                weeksToReturn.add(week);
+            }
+        }
 
-        if (weeks.isEmpty()) {
+        if (weeksToReturn.isEmpty()) {
             return null;
         }
 
-        return weeks;
+        return weeksToReturn;
     }
 
     @Override //Returns true or false if updating a Week was successful.

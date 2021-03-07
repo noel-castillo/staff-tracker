@@ -83,7 +83,7 @@ class DayPostgresDaoTests {
                 LocalDate.of(2021, 3, 7));
 
         assertEquals(1, daysToCheck.get(0).getId());
-        assertEquals("Server", daysToCheck.get(0).getDate());
+        assertEquals(LocalDate.of(2021, 3, 7), daysToCheck.get(0).getDate());
     }
 
     @Test //Testing method to update an existing Day in the database
