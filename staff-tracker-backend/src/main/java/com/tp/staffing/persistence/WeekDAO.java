@@ -15,7 +15,7 @@ public interface WeekDAO {
 
     List<Week> getWeeksByEndDate(LocalDate endDate);
 
-    List<Week> getWeeksByDate(LocalDate date);
+    List<Week> getWeeksByContainsDate(LocalDate date);
 
     List<Week> getWeeks();
 
