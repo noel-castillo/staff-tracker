@@ -26,7 +26,7 @@ public class ShiftController {
     }
 
     //Retrieves a Shift from the database by the given id.
-    @GetMapping("/shifts/{id}")
+    @GetMapping("/shift/{id}")
     public Shift getShiftById(@PathVariable Integer id) throws NullShiftIdException, InvalidShiftIdException {
         return service.getShiftById(id);
     }
@@ -50,7 +50,7 @@ public class ShiftController {
     }
 
     //Deletes an existing Shift row from the database.
-    @DeleteMapping("/Shifts/delete/{id}")
+    @DeleteMapping("/shifts/delete/{id}")
     public String deleteShift(@PathVariable Integer id) throws NullShiftIdException, InvalidShiftIdException {
         if (service.deleteShift(id)) {
             return "Shift " + id + " deleted";
