@@ -56,7 +56,7 @@ public class WeekController {
 
     //Edits an existing Week in the database by replacing it's attributes with the
     //attributes of the given Week. This is done on the Week with the given id.
-    @PutMapping("/weeks/{id}")
+    @PutMapping("/week/{id}")
     public String editWeek(@PathVariable Integer id, @RequestBody Week week) throws InvalidWeekIdException, NullWeekEndDateException, NullWeekStartDateException {
         if (service.editWeek(id, week)) {
             return "Week " + id + " updated";

@@ -9,7 +9,7 @@ import { Shift } from '../models/shift';
   providedIn: 'root'
 })
 export class ShiftService {
-  
+
   baseURL: string = "http://localhost:8080/api";
   httpOptions = { headers: new HttpHeaders({ "Content-Type": "application/json" }) };
 
@@ -17,7 +17,7 @@ export class ShiftService {
   constructor(private http: HttpClient) { }
 
   addShift(toAdd: Shift): Observable<Shift> {
-    return this.http.post<Shift>(this.baseURL + "/shifts/add-Shift", toAdd, this.httpOptions)
+    return this.http.post<Shift>(this.baseURL + "/shifts/add-shift", toAdd, this.httpOptions)
       .pipe(
         tap(x => console.log(x)),
         catchError(err => {

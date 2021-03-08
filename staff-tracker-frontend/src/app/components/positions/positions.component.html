@@ -47,9 +47,9 @@
                                                 ---
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-warning">Edit&emsp;</button>
+                                                <button type="submit" class="btn btn-warning" (click)="showEdit(position)">Edit&emsp;</button>
 
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" (click)="deletePosition(position.id)">Delete</button>
                                             </td>
                                         </tr>
 
@@ -88,7 +88,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Start Time</label>
-                                                    <input type="text" class="form-control" name="startTime" [(ngModel)]="newPosition.startTime">
+                                                    <input type="number" class="form-control" name="startTime" [(ngModel)]="newPosition.startTime">
                                                 </div>
                                             </div>
                                         </div>
@@ -96,12 +96,12 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">End Time</label>
-                                                    <input type="text" class="form-control" name="endTime" [(ngModel)]="newPosition.endTime">
+                                                    <input type="number" class="form-control" name="endTime" [(ngModel)]="newPosition.endTime">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info pull-left" (click)="showAddPositionForm = false">Submit New Position</button>
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addPosition()">Submit New Position</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
