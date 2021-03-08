@@ -16,7 +16,7 @@ export class WeekService {
   constructor(private http: HttpClient) { }
 
   addWeek(toAdd: Week): Observable<Week> {
-    return this.http.post<Week>(this.baseURL + "/weeks/add-Week", toAdd, this.httpOptions)
+    return this.http.post<Week>(this.baseURL + "/weeks/add-week", toAdd, this.httpOptions)
       .pipe(
         tap(x => console.log(x)),
         catchError(err => {
