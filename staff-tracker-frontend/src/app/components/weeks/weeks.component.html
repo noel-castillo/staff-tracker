@@ -58,7 +58,6 @@
                                                             <span class="glyphicon glyphicon-th"></span>
                                                         </div>
                                                     </div>
-                                                    <!-- <input type="text" class="form-control" name="endDate" [(ngModel)]="newWeek.endDate"> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -70,7 +69,6 @@
                                                             <span class="glyphicon glyphicon-th"></span>
                                                         </div>
                                                     </div>
-                                                    <!-- <input type="text" class="form-control" name="endDate" [(ngModel)]="newWeek.endDate"> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -87,13 +85,23 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Start Date</label>
-                                                    <input type="text" class="form-control" name="startDate" value="weekToEdit.startDate" [(ngModel)]="weekToEdit.startDate">
+                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                        <input type="date" name="startDate" value="weekToEdit.startDate" [(ngModel)]="weekToEdit.startDate" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-th"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">End Date</label>
-                                                    <input type="text" class="form-control" name="endDate" value="weekToEdit.endDate" [(ngModel)]="weekToEdit.endDate">
+                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                        <input type="date" name="endDate" value="weekToEdit.endDate" [(ngModel)]="weekToEdit.endDate" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-th"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,1 +1,121 @@
-<p>shifts works!</p>
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title ">Shifts</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <button *ngIf="!(showAddShiftForm || showEditShiftForm)" type="submit" class="btn btn-info pull-right" (click)="showAddShiftForm = true">Add Shift</button>
+                                <table class="table" *ngIf="!(showAddShiftForm || showEditShiftForm)">
+                                    <thead class=" text-info">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Start Time
+                                        </th>
+                                        <th>
+                                            End Time
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let shift of shifts" [shift]="shift">
+
+                                            <td>
+                                                {{shift.id}}
+                                            </td>
+                                            <td>
+                                                {{shift.name}}
+                                            </td>
+                                            <td>
+                                                {{shift.startTime}}
+                                            </td>
+                                            <td>
+                                                {{shift.endTime}}
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-warning" (click)="showEdit(shift)">Edit&emsp;</button>
+
+                                                <button type="submit" class="btn btn-danger" (click)="deleteShift(shift.id)">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <div *ngIf="showAddShiftForm" class="card-body">
+                                    <button *ngIf="showAddShiftForm" type="submit" class="btn btn-danger pull-right" (click)="showAddShiftForm = false">Cancel</button>
+                                    <br>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Name</label>
+                                                    <input type="text" class="form-control" name="name" [(ngModel)]="newShift.name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Start Time</label>
+                                                    <input type="number" class="form-control" name="startTime" [(ngModel)]="newShift.startTime">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Time</label>
+                                                    <input type="number" class="form-control" name="endTime" [(ngModel)]="newShift.endTime">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addShift()">Submit New Shift</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
+                                <div *ngIf="showEditShiftForm" class="card-body">
+                                    <button *ngIf="showEditShiftForm" type="submit" class="btn btn-danger pull-right" (click)="showEditShiftForm = false">Cancel</button>
+                                    <br>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Name</label>
+                                                    <input type="text" class="form-control" name="title" value="shiftToEdit.name" [(ngModel)]="shiftToEdit.name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Start Time</label>
+                                                    <input type="number" class="form-control" name="startTime" value="shiftToEdit.startTime" [(ngModel)]="shiftToEdit.startTime">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Time</label>
+                                                    <input type="number" class="form-control" name="endTime" value="shiftToEdit.endTime" [(ngModel)]="shiftToEdit.endTime">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="editShift()">Submit Edit</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -80,6 +80,4 @@ export class WeeksComponent implements OnInit {
     });
   }
 
-  
-
 }
