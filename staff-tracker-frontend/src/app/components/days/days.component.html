@@ -1,1 +1,94 @@
-<p>days works!</p>
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-info">
+                            <h4 class="card-title ">Days</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <button *ngIf="!(showAddDayForm || showEditDayForm)" type="submit" class="btn btn-info pull-right" (click)="showAddDayForm = true">Add Day</button>
+                                <table class="table" *ngIf="!(showAddDayForm || showEditDayForm)">
+
+                                    <thead class=" text-info">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let day of days" [day]="day">
+
+                                            <td>
+                                                {{day.id}}
+                                            </td>
+                                            <td>
+                                                {{day.date}}
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-warning" (click)="showEdit(day)">Edit&emsp;</button>
+
+                                                <button type="submit" class="btn btn-danger" (click)="deleteDay(day.id)">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div *ngIf="showAddDayForm" class="card-body">
+                                    <button *ngIf="showAddDayForm" type="submit" class="btn btn-danger pull-right" (click)="showAddDayForm = false">Cancel</button>
+                                    <br>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Date</label>
+                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                        <input type="date" name="date" [(ngModel)]="newDay.date" class="form-control" placeholder="Date">
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-th"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addDay()">Submit New Day</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
+                                <div *ngIf="showEditDayForm" class="card-body">
+                                    <button *ngIf="showEditDayForm" type="submit" class="btn btn-danger pull-right" (click)="showEditDayForm = false">Cancel</button>
+                                    <br>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Date</label>
+                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                        <input type="date" name="date" value="dayToEdit.date" [(ngModel)]="dayToEdit.date" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-th"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="editDay()">Submit Edit</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
