@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Employee } from '../models/employee';
 import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -10,7 +9,8 @@ import { Day } from '../models/day';
   providedIn: 'root'
 })
 export class DayService {
-    baseURL: string = "http://localhost:8080/api";
+
+  baseURL: string = "http://localhost:8080/api";
   httpOptions = { headers: new HttpHeaders({ "Content-Type": "application/json" }) };
 
 
