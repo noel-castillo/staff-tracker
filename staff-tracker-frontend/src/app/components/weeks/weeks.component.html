@@ -129,13 +129,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card" *ngFor="let day of days" [day]="day">
+                    <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
+
+                    <div class="card" *ngFor="let day of days" [day]="day" style="padding-top: 25px;">
                         <div class="card-header card-header-info" (click)="day.expand = !day.expand">
                             <h4 class="card-title ">{{day.date}}</h4>
                         </div>
+
                         <div class="card-body" *ngIf="day.expand">
                             <div class="table-responsive">
-                                <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
+
                                 <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
 
                                     <thead class=" text-info">
