@@ -12,6 +12,7 @@ public class Position {
     private Integer employeeId; //Foreign Key, can be null
     private int startTime; //Can be null
     private int endTime; //Can be null
+    private Employee employee;
 
 
     // C O N S T R U C T O R S
@@ -76,5 +77,13 @@ public class Position {
 
     public void setEndTime(int endTime) {
         this.endTime = endTime;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

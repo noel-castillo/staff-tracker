@@ -44,7 +44,7 @@
                                                 Vacant
                                             </td>
                                             <td *ngIf="position.employeeId != 0" style="color:rgb(9, 241, 9);">
-                                                Filled
+                                                {{position.employee.firstName}} {{position.employee.lastName}}
                                             </td>
                                             <td>
                                                 in progress
@@ -83,7 +83,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Status</label>
-                                                    <input type="text" class="form-control" name="employeeId" value="newPosition.employeeId" [(ngModel)]="newPosition.employeeId">
+                                                    <input type="number" class="form-control" name="employeeId" value="newPosition.employeeId" [(ngModel)]="newPosition.employeeId">
                                                 </div>
                                             </div>
                                         </div>
@@ -131,7 +131,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Status</label>
-                                                    <input type="text" class="form-control" name="status" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
+                                                    <input type="number" class="form-control" name="employeeId" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
