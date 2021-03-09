@@ -102,13 +102,23 @@ public class PositionPostgresDao implements PositionDAO {
         if (getPositionById(id) == null) {
             return false;
         } else {
-            template.execute("UPDATE public.\"Position\" " +
-                    "SET \"title\"='" + updatedPosition.getTitle() +
-                    "', \"employeeId\"='" + updatedPosition.getEmployeeId() +
-                    "', \"startTime\"='" + updatedPosition.getStartTime() +
-                    "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
-                    "WHERE \"id\" = " + id + ";");
-            return true;
+            if (updatedPosition.getEmployeeId() == 0) {
+                template.execute("UPDATE public.\"Position\" " +
+                        "SET \"title\"='" + updatedPosition.getTitle() +
+                        "', \"employeeId\"=null" +
+                        ", \"startTime\"='" + updatedPosition.getStartTime() +
+                        "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
+                        "WHERE \"id\" = " + id + ";");
+                return true;
+            } else {
+                template.execute("UPDATE public.\"Position\" " +
+                        "SET \"title\"='" + updatedPosition.getTitle() +
+                        "', \"employeeId\"='" + updatedPosition.getEmployeeId() +
+                        "', \"startTime\"='" + updatedPosition.getStartTime() +
+                        "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
+                        "WHERE \"id\" = " + id + ";");
+                return true;
+            }
         }
     }
 

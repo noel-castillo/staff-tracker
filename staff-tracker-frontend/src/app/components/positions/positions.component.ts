@@ -60,6 +60,8 @@ export class PositionsComponent implements OnInit {
       }
     );
 
+    this.reload();
+
   }
 
   deletePosition(id: number): void {
