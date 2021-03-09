@@ -135,7 +135,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <button (click)="viewWeekDiv = true">Back</button>
+                                <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
                                 <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
 
                                     <thead class=" text-info">
@@ -146,8 +146,8 @@
                                             Employee
                                         </th>
                                     </thead>
-                                    <!-- <tbody>
-                                        <tr *ngFor="let week of weeks" [week]="week">
+                                    <tbody>
+                                        <!-- <tr *ngFor="let week of weeks" [week]="week">
 
                                             <td>
                                                 {{week.id}}
@@ -165,8 +165,11 @@
 
                                                 <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button>
                                             </td>
+                                        </tr> -->
+                                        <tr>
+                                            <button type="submit" class="btn btn-info" (click)="addPosition(day)">Add Position&emsp;</button>
                                         </tr>
-                                    </tbody> -->
+                                    </tbody>
                                 </table>
 
 

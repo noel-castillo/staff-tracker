@@ -36,7 +36,10 @@ class PositionPostgresDaoTests {
         //id sequence to begin at 1.
         template.update("TRUNCATE \"Employee\", \"PositionDay\", \"Position\", \"Day\" RESTART IDENTITY;");
         //Inserting values into the test database for testing purposes.
-        template.update("INSERT INTO \"Position\" (\"title\", \"startTime\", \"endTime\") VALUES ('Server', 10, 18)");
+        template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\", \"email\", \"phone\"," +
+                "\"address\", \"enabled\") VALUES ('Noel', 'Castillo', 'ncastillo@talentpath.com', '(555) 233-6788'," +
+                "'123 Abc Blvd. Alexandria, VA', true)");
+        template.update("INSERT INTO \"Position\" (\"title\", \"employeeId\", \"startTime\", \"endTime\") VALUES ('Server', 1, 10, 18)");
 
     }
 
@@ -45,6 +48,9 @@ class PositionPostgresDaoTests {
 
         Position positionToAdd = new Position();
         positionToAdd.setTitle("Owner");
+        positionToAdd.setEmployeeId(1);
+        positionToAdd.setStartTime(5);
+        positionToAdd.setStartTime(13);
 
         Integer positionId = toTest.addPosition(positionToAdd);
         Position addedPositionToCheck = toTest.getPositionById(2);
@@ -124,19 +130,19 @@ class PositionPostgresDaoTests {
     //Golden path.
     public void addEmployeeToPositionGoldenPathTest() {
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\", \"email\", \"phone\"," +
-                "\"address\", \"enabled\") VALUES ('Noel', 'Castillo', 'ncastillo@talentpath.com', '(555) 233-6788'," +
+                "\"address\", \"enabled\") VALUES ('Joe', 'Castillo', 'jcastillo@talentpath.com', '(555) 233-6788'," +
                 "'123 Abc Blvd. Alexandria, VA', true)");
-        toTest.addEmployeeToPosition(1, 1);
-        assertEquals(1, toTest.getPositionById(1).getEmployeeId());
+        toTest.addEmployeeToPosition(2, 1);
+        assertEquals(2, toTest.getPositionById(1).getEmployeeId());
     }
 
     @Test //Testing method to remove any associated employee id of a position by the given id.
     public void removeEmployeeToPositionGoldenPathTest() {
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\", \"email\", \"phone\"," +
-                "\"address\", \"enabled\") VALUES ('Noel', 'Castillo', 'ncastillo@talentpath.com', '(555) 233-6788'," +
+                "\"address\", \"enabled\") VALUES ('Joe', 'Castillo', 'jcastillo@talentpath.com', '(555) 233-6788'," +
                 "'123 Abc Blvd. Alexandria, VA', true)");
-        toTest.addEmployeeToPosition(1, 1);
-        assertEquals(1, toTest.getPositionById(1).getEmployeeId());
+        toTest.addEmployeeToPosition(2, 1);
+        assertEquals(2, toTest.getPositionById(1).getEmployeeId());
         toTest.removeEmployeeFromPosition(1);
         assertEquals(0, toTest.getPositionById(1).getEmployeeId());
     }

@@ -4,6 +4,7 @@ package com.tp.staffing.service;
 import com.tp.staffing.exceptions.*;
 import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
+import com.tp.staffing.persistence.EmployeePostgresDao;
 import com.tp.staffing.persistence.PositionPostgresDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class PositionService {
 
     @Autowired
     PositionPostgresDao dao;
+    EmployeePostgresDao empDao;
 
     //Adds a position to the database.
     //When attempting to add a position to the database. An exception will be thrown if the given title
@@ -57,12 +59,16 @@ public class PositionService {
         if (title.trim().equals("")) {
             throw new InvalidPositionTitleException("You cannot retrieve Positions with a empty title.");
         }
-        return dao.getPositionsByTitle(title);
+        List<Position> positions = dao.getPositionsByTitle(title);
+
+        return positions;
     }
 
     //Retrieves a list of all existing positions in the database.
     public List<Position> getPositions() {
-        return dao.getPositions();
+        List<Position> positions = dao.getPositions();
+
+        return positions;
     }
 
     //Updates an existing position in the database.

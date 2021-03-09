@@ -41,6 +41,15 @@ public class PositionPostgresDao implements PositionDAO {
             return null;
         }
 
+        if (positions.get(0).getEmployeeId() != 0) {
+            Employee employee = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                    "\"email\", \"phone\", \"address\", \"enabled\"" +
+                    "\tFROM public.\"Employee\"\n" +
+                    "\t\tWHERE \"id\" = '" + positions.get(0).getEmployeeId() + "';", new EmployeeMapper()).get(0);
+            positions.get(0).setEmployee(employee);
+        }
+
+
         return positions.get(0);
     }
 
@@ -51,6 +60,16 @@ public class PositionPostgresDao implements PositionDAO {
 
         if (positions.isEmpty()) {
             return null;
+        }
+
+        for (Position position : positions) {
+            if (position.getEmployeeId() != 0) {
+                Employee employee = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                        "\"email\", \"phone\", \"address\", \"enabled\"" +
+                        "\tFROM public.\"Employee\"\n" +
+                        "\t\tWHERE \"id\" = '" + position.getEmployeeId() + "';", new EmployeeMapper()).get(0);
+                position.setEmployee(employee);
+            }
         }
 
         return positions;
@@ -66,6 +85,15 @@ public class PositionPostgresDao implements PositionDAO {
             return null;
         }
 
+        for (Position position : positions) {
+            if (position.getEmployeeId() != 0) {
+                Employee employee = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                        "\"email\", \"phone\", \"address\", \"enabled\"" +
+                        "\tFROM public.\"Employee\"\n" +
+                        "\t\tWHERE \"id\" = '" + position.getEmployeeId() + "';", new EmployeeMapper()).get(0);
+                position.setEmployee(employee);
+            }
+        }
         return positions;
     }
 

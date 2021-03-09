@@ -3,6 +3,7 @@ package com.tp.staffing.controller;
 
 import com.tp.staffing.exceptions.*;
 import com.tp.staffing.model.Position;
+import com.tp.staffing.service.EmployeeService;
 import com.tp.staffing.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 public class PositionController {
     @Autowired
     PositionService service;
+    EmployeeService empService;
 
     //Adds a new position to the database by the given position. Title cannot be null or empty.
     @PostMapping("/positions/add-position")
@@ -36,8 +38,12 @@ public class PositionController {
 
     //Retrieves a list of all positions in the database.
     @GetMapping("/positions")
-    public List<Position> getPositions() {
-        return service.getPositions();
+    public List<Position> getPositions() throws NullEmployeeIdException, InvalidEmployeeIdException {
+        List<Position> positions = service.getPositions();
+//        for(Position position : positions){
+//            position.setEmployee(empService.getEmployeeById(position.getEmployeeId()));
+//        }
+        return positions;
     }
 
     //Edits an existing position in the database by replacing it's attributes with the

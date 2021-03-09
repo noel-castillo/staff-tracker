@@ -11,26 +11,19 @@ import { PositionService } from 'src/app/services/position.service';
 })
 export class PositionsComponent implements OnInit {
 
-  positions : Position[];
+  positions: Position[];
   newPosition: Position = new Position();
   positionToEdit: Position;
   showAddPositionForm: boolean = false;
   showEditPositionForm: boolean = false;
-  employee: Employee = new Employee();
 
-  constructor(private posService : PositionService, private empService: EmployeeService) { }
+  constructor(private posService: PositionService, private empService: EmployeeService) { }
 
   ngOnInit(): void {
     this.posService.getAllPositions().subscribe(list => {
       this.positions = list;
-     
     });
 
-    this.positions.forEach(function (position) {
-      position.employee = this.empService.getEmployee(position.employeeId);
-      console.log(position.employee);
-  });
-  
   }
 
   addPosition(): void {
@@ -49,7 +42,7 @@ export class PositionsComponent implements OnInit {
     );
   }
 
-  showEdit(Position: Position){
+  showEdit(Position: Position) {
     this.showEditPositionForm = true;
     this.positionToEdit = Position;
   }
