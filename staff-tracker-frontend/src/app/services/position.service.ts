@@ -27,6 +27,17 @@ export class PositionService {
       );
   }
 
+  addPositionWithDay(toAdd: Position, dayId: number): Observable<Position> {
+    return this.http.post<Position>(this.baseURL + "/positions/add-position/" + dayId, toAdd, this.httpOptions)
+      .pipe(
+        tap(x => console.log(x)),
+        catchError(err => {
+          console.log(err);
+          return of(null);
+        })
+      );
+  }
+
   getPosition(id: number): Observable<Position> {
     return this.http.get<Position>(this.baseURL + "/position/" + id)
       .pipe(

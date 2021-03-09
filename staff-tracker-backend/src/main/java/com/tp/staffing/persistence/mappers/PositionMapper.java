@@ -16,6 +16,7 @@ public class PositionMapper implements RowMapper<Position> {
         mappedPosition.setEmployeeId(resultSet.getInt("employeeId"));
         mappedPosition.setStartTime(resultSet.getInt("startTime"));
         mappedPosition.setEndTime(resultSet.getInt("endTime"));
+        mappedPosition.setShift(resultSet.getString("shift"));
 
         return mappedPosition;
     }

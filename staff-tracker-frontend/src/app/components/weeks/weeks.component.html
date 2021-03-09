@@ -9,8 +9,8 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <button *ngIf="!(showAddWeekForm || showEditWeekForm)" type="submit" class="btn btn-info pull-right" (click)="showAddWeekForm = true">Add Week</button>
-                                <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
+                                <button *ngIf="!(showAddWeekForm || showEditWeekForm || showAddPositionForm || showEditPositionForm)" type="submit" class="btn btn-info pull-right" (click)="showAddWeekForm = true">Add Week</button>
+                                <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm || showAddPositionForm || showEditPositionForm)">
 
                                     <thead class=" text-info">
                                         <th>
@@ -130,10 +130,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card" *ngFor="let day of days" [day]="day">
-                        <div class="card-header card-header-info">
+                        <div class="card-header card-header-info" (click)="day.expand = !day.expand">
                             <h4 class="card-title ">{{day.date}}</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" *ngIf="day.expand">
                             <div class="table-responsive">
                                 <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
                                 <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
@@ -147,16 +147,16 @@
                                         </th>
                                     </thead>
                                     <tbody>
-                                        <!-- <tr *ngFor="let week of weeks" [week]="week">
+                                        <tr *ngFor="let position of day.positions" [position]="position">
 
                                             <td>
-                                                {{week.id}}
+                                                {{position.title}}
                                             </td>
-                                            <td>
-                                                {{week.startDate}}
+                                            <td *ngIf="position.employeeId != 0" style="color:rgb(9, 241, 9);">
+                                                {{position.employee.firstName}} {{position.employee.lastName}}
                                             </td>
-                                            <td>
-                                                {{week.endDate}}
+                                            <td *ngIf="position.employeeId == 0" style="color:rgb(240, 35, 35);">
+                                                Vacant
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-info" (click)="viewWeek(week)">View Details&emsp;</button>
@@ -165,81 +165,108 @@
 
                                                 <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button>
                                             </td>
-                                        </tr> -->
+                                        </tr>
                                         <tr>
-                                            <button type="submit" class="btn btn-info" (click)="addPosition(day)">Add Position&emsp;</button>
+                                            <button type="submit" class="btn btn-info" (click)="addPosition(day.id)">Add Position&emsp;</button>
                                         </tr>
                                     </tbody>
                                 </table>
 
 
 
-                                <!-- <div *ngIf="showAddWeekForm" class="card-body">
-                                    <button *ngIf="showAddWeekForm" type="submit" class="btn btn-danger pull-right" (click)="showAddWeekForm = false">Cancel</button>
+                                <div *ngIf="showAddPositionForm" class="card-body">
+                                    <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = false">Cancel</button>
                                     <br>
                                     <form>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Start Date</label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="startDate" [(ngModel)]="newWeek.startDate" class="form-control" placeholder="Start Date">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">End Date</label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="endDate" [(ngModel)]="newWeek.endDate" class="form-control" placeholder="End Date">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
+                                                    <label class="bmd-label-floating">Title</label>
+                                                    <input type="text" class="form-control" name="title" [(ngModel)]="newPosition.title">
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-info pull-left" (click)="addWeek()">Submit New Week</button>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Employee</label>
+                                                    <input type="number" class="form-control" name="employeeId" value="newPosition.employeeId" [(ngModel)]="newPosition.employeeId">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Date</label>
+                                                    <input type="text" class="form-control" name="days">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Start Time</label>
+                                                    <input type="number" class="form-control" name="startTime" [(ngModel)]="newPosition.startTime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Time</label>
+                                                    <input type="number" class="form-control" name="endTime" [(ngModel)]="newPosition.endTime">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addPosition()">Submit New Position</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
 
-                                <div *ngIf="showEditWeekForm" class="card-body">
-                                    <button *ngIf="showEditWeekForm" type="submit" class="btn btn-danger pull-right" (click)="showEditWeekForm = false">Cancel</button>
+                                <div *ngIf="showEditPositionForm" class="card-body">
+                                    <button *ngIf="showEditPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showEditPositionForm = false">Cancel</button>
                                     <br>
                                     <form>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Start Date</label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="startDate" value="weekToEdit.startDate" [(ngModel)]="weekToEdit.startDate" class="form-control">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
+                                                    <label class="bmd-label-floating">Title</label>
+                                                    <input type="text" class="form-control" name="title" value="positionToEdit.title" [(ngModel)]="positionToEdit.title">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">End Date</label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="endDate" value="weekToEdit.endDate" [(ngModel)]="weekToEdit.endDate" class="form-control">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
+                                                    <label class="bmd-label-floating">Employee</label>
+                                                    <input type="number" class="form-control" name="employeeId" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Date</label>
+                                                    <input type="email" class="form-control" name="days">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Start Time</label>
+                                                    <input type="email" class="form-control" name="startTime" value="positionToEdit.startTime" [(ngModel)]="positionToEdit.startTime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">End Time</label>
+                                                    <input type="text" class="form-control" name="endTime" value="positionToEdit.endTime" [(ngModel)]="positionToEdit.endTime">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info pull-left" (click)="editWeek()">Submit Edit</button>
+                                        <button type="submit" class="btn btn-info pull-left" (click)="editPosition()">Submit Edit</button>
                                         <div class="clearfix"></div>
                                     </form>
-                                </div> -->
+                                </div>
 
                             </div>
                         </div>

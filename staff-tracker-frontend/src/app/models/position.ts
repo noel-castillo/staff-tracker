@@ -6,6 +6,7 @@ export class Position {
     employeeId: number;
     startTime: number;
     endTime: number;
+    shift: string;
     employee: Employee;
 
     constructor(
@@ -14,6 +15,7 @@ export class Position {
         employeeId?: number,
         startTime?: number,
         endTime?: number,
+        shift?: string,
         employee?: Employee
 
     ) {
@@ -22,6 +24,7 @@ export class Position {
         this.employeeId = employeeId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.shift = shift;
         this.employee = employee;
     }
 }

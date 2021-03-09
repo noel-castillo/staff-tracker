@@ -25,9 +25,23 @@ public class PositionPostgresDao implements PositionDAO {
     @Override  //Adds a position to the database and returns it's id.
     public Integer addPosition(Position position) {
 
-        return template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\")" +
-                "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "') " +
+        return template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\" , \"shift\")" +
+                "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
                 "RETURNING \"id\";", new IdMapper()).get(0);
+    }
+
+    @Override  //Adds a position to the database and returns it's id. Also adds a PositionDay row.
+    public Integer addPositionWithDay(Position position, Integer dayId) {
+
+        Integer positionId = template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\")" +
+                "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
+                "RETURNING \"id\";", new IdMapper()).get(0);
+
+        template.execute("INSERT INTO public.\"PositionDay\"(\"positionId\", \"dayId\")" +
+                "VALUES (" + positionId + ", " + dayId + ");");
+
+
+        return positionId;
     }
 
     @Override //Returns a position from the database with the given id.
@@ -107,7 +121,8 @@ public class PositionPostgresDao implements PositionDAO {
                         "SET \"title\"='" + updatedPosition.getTitle() +
                         "', \"employeeId\"=null" +
                         ", \"startTime\"='" + updatedPosition.getStartTime() +
-                        "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
+                        "', \"endTime\"='" + updatedPosition.getEndTime() +
+                        "', \"shift\"='" + updatedPosition.getShift() + "' " +
                         "WHERE \"id\" = " + id + ";");
                 return true;
             } else {
@@ -115,7 +130,8 @@ public class PositionPostgresDao implements PositionDAO {
                         "SET \"title\"='" + updatedPosition.getTitle() +
                         "', \"employeeId\"='" + updatedPosition.getEmployeeId() +
                         "', \"startTime\"='" + updatedPosition.getStartTime() +
-                        "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
+                        "', \"endTime\"='" + updatedPosition.getEndTime() +
+                        "', \"shift\"='" + updatedPosition.getShift() + "' " +
                         "WHERE \"id\" = " + id + ";");
                 return true;
             }

@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { Day } from 'src/app/models/day';
 import { Week } from 'src/app/models/week';
 import { DayService } from 'src/app/services/day.service';
+import { PositionService } from 'src/app/services/position.service';
 import { WeekService } from 'src/app/services/week.service';
+import { Position } from 'src/app/models/position';
 
 @Component({
   selector: 'app-weeks',
@@ -20,7 +22,7 @@ export class WeeksComponent implements OnInit {
   viewWeekDiv: boolean = true;
   days: Day[];
 
-  constructor(private weekService: WeekService, private dayService: DayService, private router: Router) { }
+  constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private router: Router) { }
 
   ngOnInit(): void {
     this.weekService.getWeeks().subscribe(list => {
@@ -90,6 +92,12 @@ export class WeeksComponent implements OnInit {
       this.days = list
     });
     console.log(this.days);
+  }
+
+  addPositionWithDay(position: Position, dayId: number): void {
+    this.positionService.addPositionWithDay(position, dayId).subscribe(list => {
+      this.reload();
+    });
   }
 
 }

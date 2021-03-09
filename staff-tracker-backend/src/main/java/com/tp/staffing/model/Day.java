@@ -3,6 +3,7 @@ package com.tp.staffing.model;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 public class Day {
 
@@ -10,6 +11,7 @@ public class Day {
     private Integer id; //Primary Key, Cannot be null
     private LocalDate date; //Cannot be null
     private Integer weekId;
+    private List<Position> positions;
 
 
     // C O N S T R U C T O R S
@@ -56,5 +58,13 @@ public class Day {
 
     public void setWeekId(Integer weekId) {
         this.weekId = weekId;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
     }
 }

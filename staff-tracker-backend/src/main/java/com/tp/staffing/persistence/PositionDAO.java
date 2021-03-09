@@ -17,6 +17,8 @@ public interface PositionDAO {
 
     Integer addPosition(Position position);
 
+    Integer addPositionWithDay(Position position, Integer dayId);
+
     boolean deletePosition(Integer id) throws InvalidPositionIdException;
 
     boolean editPosition(Integer id, Position updatedPosition) throws InvalidPositionIdException;

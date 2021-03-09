@@ -39,7 +39,7 @@ class PositionPostgresDaoTests {
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\", \"email\", \"phone\"," +
                 "\"address\", \"enabled\") VALUES ('Noel', 'Castillo', 'ncastillo@talentpath.com', '(555) 233-6788'," +
                 "'123 Abc Blvd. Alexandria, VA', true)");
-        template.update("INSERT INTO \"Position\" (\"title\", \"employeeId\", \"startTime\", \"endTime\") VALUES ('Server', 1, 10, 18)");
+        template.update("INSERT INTO \"Position\" (\"title\", \"employeeId\", \"startTime\", \"endTime\", \"shift\") VALUES ('Server', 1, 10, 18, 'Morning')");
 
     }
 

@@ -24,6 +24,12 @@ public class PositionController {
         return service.addPosition(position);
     }
 
+    //Adds a new position to the database by the given position. Title cannot be null or empty.
+    @PostMapping("/positions/add-position/{dayId}")
+    public Integer addPosition(@RequestBody Position position, @PathVariable Integer dayId) throws NullPositionTitleException, InvalidPositionTitleException {
+        return service.addPositionWithDay(position, dayId);
+    }
+
     //Retrieves a position from the database by the given id.
     @GetMapping("/position/{id}")
     public Position getPositionById(@PathVariable Integer id) throws NullPositionIdException, InvalidPositionIdException {

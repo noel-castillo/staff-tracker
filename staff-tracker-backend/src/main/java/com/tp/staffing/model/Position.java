@@ -13,6 +13,7 @@ public class Position {
     private int startTime; //Can be null
     private int endTime; //Can be null
     private Employee employee;
+    private String shift;
 
 
     // C O N S T R U C T O R S
@@ -85,5 +86,13 @@ public class Position {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public String getShift() {
+        return shift;
+    }
+
+    public void setShift(String shift) {
+        this.shift = shift;
     }
 }

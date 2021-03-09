@@ -1,9 +1,13 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Day;
+import com.tp.staffing.model.Employee;
+import com.tp.staffing.model.Position;
 import com.tp.staffing.model.Week;
+import com.tp.staffing.persistence.mappers.EmployeeMapper;
 import com.tp.staffing.persistence.mappers.IdMapper;
 import com.tp.staffing.persistence.mappers.DayMapper;
+import com.tp.staffing.persistence.mappers.PositionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -29,6 +33,7 @@ public class DayPostgresDao implements DayDAO {
 
     @Override //Returns a Day from the database with the given id.
     // Or returns null if no Days are found with the given id.
+    //Attaches all positions to the day.
     public Day getDayById(Integer id) {
         List<Day> days = template.query("SELECT * " +
                 "\tFROM public.\"Day\"\n" +
@@ -38,10 +43,30 @@ public class DayPostgresDao implements DayDAO {
             return null;
         }
 
+        List<Position> positions = template.query("SELECT p.* \n" +
+                "FROM \"Position\" as p\n" +
+                "RIGHT JOIN \"PositionDay\" as pd \n" +
+                "ON p.\"id\" = pd.\"positionId\"\n" +
+                "RIGHT JOIN \"Day\" as d\n" +
+                "ON pd.\"dayId\" = d.\"id\"\n" +
+                "WHERE d.\"id\" = '" + days.get(0).getId() + "';", new PositionMapper());
+
+        for (Position position : positions) {
+            if (position.getEmployeeId() != 0) {
+                Employee employee = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                        "\"email\", \"phone\", \"address\", \"enabled\"" +
+                        "\tFROM public.\"Employee\"\n" +
+                        "\t\tWHERE \"id\" = '" + position.getEmployeeId() + "';", new EmployeeMapper()).get(0);
+                position.setEmployee(employee);
+            }
+        }
+
+        days.get(0).setPositions(positions);
+
         return days.get(0);
     }
 
-    @Override //Returns a list of all Days in the database.
+    @Override //Returns a list of all Days in the database. Attaches all positions on that day.
     public List<Day> getDays() {
         List<Day> days = template.query("SELECT * " +
                 "\tFROM public.\"Day\"\n;", new DayMapper());
@@ -50,21 +75,64 @@ public class DayPostgresDao implements DayDAO {
             return null;
         }
 
+        for (Day day : days) {
+            List<Position> positions = template.query("SELECT p.* \n" +
+                    "FROM \"Position\" as p\n" +
+                    "RIGHT JOIN \"PositionDay\" as pd \n" +
+                    "ON p.\"id\" = pd.\"positionId\"\n" +
+                    "RIGHT JOIN \"Day\" as d\n" +
+                    "ON pd.\"dayId\" = d.\"id\"\n" +
+                    "WHERE d.\"id\" = '" + day.getId() + "';", new PositionMapper());
+
+            for (Position position : positions) {
+                if (position.getEmployeeId() != 0) {
+                    Employee employee = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                            "\"email\", \"phone\", \"address\", \"enabled\"" +
+                            "\tFROM public.\"Employee\"\n" +
+                            "\t\tWHERE \"id\" = '" + position.getEmployeeId() + "';", new EmployeeMapper()).get(0);
+                    position.setEmployee(employee);
+                }
+            }
+
+            day.setPositions(positions);
+        }
+
         return days;
     }
 
     @Override //Returns a list of all Days in the database within the given date range.
+    //Attaches all positions to the days.
     public List<Day> getDaysByRange(LocalDate startDate, LocalDate endDate) {
         List<Day> days = getDays();
         List<Day> daysToReturn = new ArrayList<>();
-        for(Day day : days){
-            if(day.getDate().compareTo(startDate) >= 0 && day.getDate().compareTo(endDate) <= 0){
+        for (Day day : days) {
+            if (day.getDate().compareTo(startDate) >= 0 && day.getDate().compareTo(endDate) <= 0) {
                 daysToReturn.add(day);
             }
         }
 
         if (daysToReturn.isEmpty()) {
             return null;
+        }
+
+        for (Day day : days) {
+            List<Position> positions = template.query("SELECT p.* \n" +
+                    "FROM \"Position\" as p\n" +
+                    "RIGHT JOIN \"PositionDay\" as pd \n" +
+                    "ON p.\"id\" = pd.\"positionId\"\n" +
+                    "RIGHT JOIN \"Day\" as d\n" +
+                    "ON pd.\"dayId\" = d.\"id\"\n" +
+                    "WHERE d.\"id\" = '" + day.getId() + "';", new PositionMapper());
+            for (Position position : positions) {
+                if (position.getEmployeeId() != 0) {
+                    Employee employee = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                            "\"email\", \"phone\", \"address\", \"enabled\"" +
+                            "\tFROM public.\"Employee\"\n" +
+                            "\t\tWHERE \"id\" = '" + position.getEmployeeId() + "';", new EmployeeMapper()).get(0);
+                    position.setEmployee(employee);
+                }
+            }
+            day.setPositions(positions);
         }
 
         return daysToReturn;

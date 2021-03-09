@@ -32,6 +32,20 @@ public class PositionService {
         return dao.addPosition(position);
     }
 
+    //Adds a position to the database and a PositionDay row.
+    //When attempting to add a position to the database. An exception will be thrown if the given title
+    //variable is either null or empty.
+    public Integer addPositionWithDay(Position position, Integer dayId) throws NullPositionTitleException, InvalidPositionTitleException {
+        if (position.getTitle() == null) {
+            throw new NullPositionTitleException("You cannot add a Position with a null title.");
+        }
+
+        if (position.getTitle().trim().equals("")) {
+            throw new InvalidPositionTitleException("You cannot add a Position with a empty title.");
+        }
+        return dao.addPositionWithDay(position, dayId);
+    }
+
     //Retrieves a position from the database by id.
     //When attempting to retrieve an id from the database. An exception will be thrown if given
     //a null for the id to look for.
