@@ -17,10 +17,15 @@ export class WeeksComponent implements OnInit {
   weeks: Week[];
   showAddWeekForm: boolean = false;
   showEditWeekForm: boolean = false;
+  showAddPositionForm: boolean = false;
+  showEditPositionForm: boolean = false;
   newWeek: Week = new Week();
   weekToEdit: Week;
   viewWeekDiv: boolean = true;
   days: Day[];
+  dayIdToAdd: number;
+  newPosition: Position = new Position();
+  positionToEdit: Position = new Position();
 
   constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private router: Router) { }
 
@@ -94,10 +99,15 @@ export class WeeksComponent implements OnInit {
     console.log(this.days);
   }
 
-  addPositionWithDay(position: Position, dayId: number): void {
-    this.positionService.addPositionWithDay(position, dayId).subscribe(list => {
+  addPositionWithDay(): void {
+    this.positionService.addPositionWithDay(this.newPosition, this.dayIdToAdd).subscribe(list => {
       this.reload();
     });
+  }
+
+  displayAddPosition(dayId: number): void{
+    this.dayIdToAdd = dayId;
+    this.showAddPositionForm = !this.showAddPositionForm;
   }
 
 }

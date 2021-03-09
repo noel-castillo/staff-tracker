@@ -24,24 +24,40 @@ public class PositionPostgresDao implements PositionDAO {
 
     @Override  //Adds a position to the database and returns it's id.
     public Integer addPosition(Position position) {
-
-        return template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\" , \"shift\")" +
-                "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
-                "RETURNING \"id\";", new IdMapper()).get(0);
+        if(position.getEmployeeId() != 0) {
+            return template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\" , \"shift\")" +
+                    "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
+                    "RETURNING \"id\";", new IdMapper()).get(0);
+        } else {
+            return template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\" , \"shift\")" +
+                    "VALUES ( '" + position.getTitle() + "', " + null + ", '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
+                    "RETURNING \"id\";", new IdMapper()).get(0);
+        }
     }
 
     @Override  //Adds a position to the database and returns it's id. Also adds a PositionDay row.
     public Integer addPositionWithDay(Position position, Integer dayId) {
 
-        Integer positionId = template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\")" +
-                "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
-                "RETURNING \"id\";", new IdMapper()).get(0);
+        if (position.getEmployeeId() != 0) {
+            Integer positionId = template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\" , \"shift\")" +
+                    "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
+                    "RETURNING \"id\";", new IdMapper()).get(0);
 
-        template.execute("INSERT INTO public.\"PositionDay\"(\"positionId\", \"dayId\")" +
-                "VALUES (" + positionId + ", " + dayId + ");");
+            template.execute("INSERT INTO public.\"PositionDay\"(\"positionId\", \"dayId\")" +
+                    "VALUES (" + positionId + ", " + dayId + ");");
+            return positionId;
+        } else {
+            Integer positionId = template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\" , \"shift\")" +
+                    "VALUES ( '" + position.getTitle() + "', " + null + ", '" + position.getStartTime() + "', '" + position.getEndTime() + "', '" + position.getShift() + "') " +
+                    "RETURNING \"id\";", new IdMapper()).get(0);
+
+            template.execute("INSERT INTO public.\"PositionDay\"(\"positionId\", \"dayId\")" +
+                    "VALUES (" + positionId + ", " + dayId + ");");
+            return positionId;
+
+        }
 
 
-        return positionId;
     }
 
     @Override //Returns a position from the database with the given id.

@@ -14,9 +14,6 @@
 
                                     <thead class=" text-info">
                                         <th>
-                                            ID
-                                        </th>
-                                        <th>
                                             Start Date
                                         </th>
                                         <th>
@@ -25,10 +22,6 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let week of weeks" [week]="week">
-
-                                            <td>
-                                                {{week.id}}
-                                            </td>
                                             <td>
                                                 {{week.startDate}}
                                             </td>
@@ -170,7 +163,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <button type="submit" class="btn btn-info" (click)="addPosition(day.id)">Add Position&emsp;</button>
+                                            <button type="submit" class="btn btn-info" (click)="displayAddPosition(day.id)">Add Position&emsp;</button>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -178,7 +171,7 @@
 
 
                                 <div *ngIf="showAddPositionForm" class="card-body">
-                                    <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = false">Cancel</button>
+                                    <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = !showAddPositionForm">Cancel</button>
                                     <br>
                                     <form>
                                         <div class="row">
@@ -193,15 +186,15 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Employee</label>
-                                                    <input type="number" class="form-control" name="employeeId" value="newPosition.employeeId" [(ngModel)]="newPosition.employeeId">
+                                                    <input type="number" class="form-control" name="employeeId" [(ngModel)]="newPosition.employeeId">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Date</label>
-                                                    <input type="text" class="form-control" name="days">
+                                                    <label class="bmd-label-floating">Shift</label>
+                                                    <input type="text" class="form-control" name="shift" [(ngModel)]="newPosition.shift">
                                                 </div>
                                             </div>
                                         </div>
@@ -222,7 +215,7 @@
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-info pull-left" (click)="addPosition()">Submit New Position</button>
+                                        <button type="submit" class="btn btn-info pull-left" (click)="addPositionWithDay()" (click)="showAddPositionForm = !showAddPositionForm">Submit New Position</button>
                                         <div class="clearfix"></div>
                                     </form>
                                 </div>
