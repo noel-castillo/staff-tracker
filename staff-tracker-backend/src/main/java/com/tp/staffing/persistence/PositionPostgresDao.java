@@ -25,8 +25,8 @@ public class PositionPostgresDao implements PositionDAO {
     @Override  //Adds a position to the database and returns it's id.
     public Integer addPosition(Position position) {
 
-        return template.query("INSERT INTO public.\"Position\"(\"title\", \"startTime\", \"endTime\")" +
-                "VALUES ( '" + position.getTitle() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "') " +
+        return template.query("INSERT INTO public.\"Position\"(\"title\", \"employeeId\", \"startTime\", \"endTime\")" +
+                "VALUES ( '" + position.getTitle() + "', '" + position.getEmployeeId() + "', '" + position.getStartTime() + "', '" + position.getEndTime() + "') " +
                 "RETURNING \"id\";", new IdMapper()).get(0);
     }
 
@@ -76,6 +76,7 @@ public class PositionPostgresDao implements PositionDAO {
         } else {
             template.execute("UPDATE public.\"Position\" " +
                     "SET \"title\"='" + updatedPosition.getTitle() +
+                    "', \"employeeId\"='" + updatedPosition.getEmployeeId() +
                     "', \"startTime\"='" + updatedPosition.getStartTime() +
                     "', \"endTime\"='" + updatedPosition.getEndTime() + "' " +
                     "WHERE \"id\" = " + id + ";");
@@ -98,7 +99,8 @@ public class PositionPostgresDao implements PositionDAO {
     @Override //Adds an employee id to a position entity. Returns true or false if successful.
     public boolean addEmployeeToPosition(Integer employeeId, Integer positionId) {
 
-        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\"\n" +
+        List<Employee> employees = template.query("SELECT id, \"firstName\", \"lastName\", " +
+                "\"email\", \"phone\", \"address\", \"enabled\"" +
                 "\tFROM public.\"Employee\"\n" +
                 "\t\tWHERE \"id\" = '" + employeeId + "';", new EmployeeMapper());
         if (employees.isEmpty()) {
@@ -130,6 +132,4 @@ public class PositionPostgresDao implements PositionDAO {
 
     }
 
-    //Need methods to implement adding days to a position. There is a PositionDay bridge table.
-    //Pre
 }

@@ -9,6 +9,7 @@ public class Day {
     // V A R I A B L E S
     private Integer id; //Primary Key, Cannot be null
     private LocalDate date; //Cannot be null
+    private Integer weekId;
 
 
     // C O N S T R U C T O R S
@@ -16,15 +17,17 @@ public class Day {
 
     }
 
-    public Day(Integer id, LocalDate date) {
+    public Day(Integer id, LocalDate date, Integer weekId) {
         this.id = id;
         this.date = date;
+        this.weekId = weekId;
 
     }
 
     public Day(Day that) {
         this.id = that.id;
         this.date = that.date;
+        this.weekId = that.weekId;
 
     }
 
@@ -45,5 +48,13 @@ public class Day {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Integer getWeekId() {
+        return weekId;
+    }
+
+    public void setWeekId(Integer weekId) {
+        this.weekId = weekId;
     }
 }

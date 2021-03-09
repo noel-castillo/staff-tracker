@@ -5,6 +5,7 @@ import com.tp.staffing.exceptions.*;
 import com.tp.staffing.model.Day;
 import com.tp.staffing.service.DayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -31,7 +32,7 @@ public class DayController {
 
     //Retrieves a list of Days by the given range from the database. Date ranges cannot be null.
     @GetMapping("/days/{startDate}/{endDate}")
-    public List<Day> getDaysByRange(@PathVariable LocalDate startDate, LocalDate endDate) throws NullDayDateException {
+    public List<Day> getDaysByRange(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws NullDayDateException {
         return service.getDaysByRange(startDate, endDate);
     }
 

@@ -14884,7 +14884,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .main-panel>.content {
-    margin-top: 70px;
+    /* margin-top: 70px; */
     padding: 30px 15px;
     min-height: calc(100vh - 123px);
 }
@@ -14902,8 +14902,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .main-panel .header .title {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /* margin-top: 10px; */
 }
 
 .perfect-scrollbar-on .sidebar,

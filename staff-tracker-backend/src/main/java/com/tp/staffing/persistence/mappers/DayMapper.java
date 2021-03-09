@@ -13,6 +13,7 @@ public class DayMapper implements RowMapper<Day> {
         Day mappedDay = new Day();
         mappedDay.setId(resultSet.getInt("id"));
         mappedDay.setDate(resultSet.getDate("date").toLocalDate());
+        mappedDay.setWeekId(resultSet.getInt("weekId"));
         return mappedDay;
     }
 }
