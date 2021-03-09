@@ -22,8 +22,8 @@ public class DayPostgresDao implements DayDAO {
     @Override  //Adds a Day to the database and returns it's id.
     public Integer addDay(Day day) {
 
-        return template.query("INSERT INTO public.\"Day\"(\"date\")" +
-                "VALUES ( '" + day.getDate() + "') " +
+        return template.query("INSERT INTO public.\"Day\"(\"date\", \"weekId\")" +
+                "VALUES ( '" + day.getDate() + "', '" + day.getWeekId() + "') " +
                 "RETURNING \"id\";", new IdMapper()).get(0);
     }
 
@@ -76,7 +76,8 @@ public class DayPostgresDao implements DayDAO {
             return false;
         } else {
             template.execute("UPDATE public.\"Day\" " +
-                    "SET \"date\"='" + updatedDay.getDate() + "' " +
+                    "SET \"date\"='" + updatedDay.getDate() + "', " +
+                    "\"weekId\"='" + updatedDay.getWeekId() + "'" +
                     "WHERE \"id\" = " + id + ";");
             return true;
         }

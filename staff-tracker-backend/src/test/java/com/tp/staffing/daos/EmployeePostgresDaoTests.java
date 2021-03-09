@@ -36,7 +36,9 @@ class EmployeePostgresDaoTests {
         //id sequence to begin at 1.
         template.update("TRUNCATE \"Employee\", \"PositionDay\", \"Position\", \"Day\" RESTART IDENTITY;");
         //Inserting values into the test database for testing purposes.
-        template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\") VALUES ('Noel', 'Castillo')");
+        template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\", \"email\", \"phone\"," +
+                "\"address\", \"enabled\") VALUES ('Noel', 'Castillo', 'ncastillo@talentpath.com', '(555) 233-6788'," +
+                "'123 Abc Blvd. Alexandria, VA', true)");
 
     }
 

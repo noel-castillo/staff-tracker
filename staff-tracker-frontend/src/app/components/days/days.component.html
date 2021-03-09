@@ -19,6 +19,9 @@
                                         <th>
                                             Date
                                         </th>
+                                        <th>
+                                            Week ID
+                                        </th>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let day of days" [day]="day">
@@ -30,6 +33,13 @@
                                                 {{day.date}}
                                             </td>
                                             <td>
+                                                {{day.weekId}}
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-info" (click)="addPosition(day.id)">Add Position&emsp;</button>
+
+                                                <button type="submit" class="btn btn-info" (click)="viewPositions()">View Positions&emsp;</button>
+
                                                 <button type="submit" class="btn btn-warning" (click)="showEdit(day)">Edit&emsp;</button>
 
                                                 <button type="submit" class="btn btn-danger" (click)="deleteDay(day.id)">Delete</button>

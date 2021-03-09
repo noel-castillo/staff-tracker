@@ -43,6 +43,8 @@ class DayPostgresDaoTests {
 
         Day dayToAdd = new Day();
         dayToAdd.setDate(LocalDate.of(2021, 3, 8));
+        template.update("INSERT INTO \"Week\" (\"startDate\", \"endDate\") VALUES ('2021-03-07', '2021-03-13')");
+        dayToAdd.setWeekId(1);
 
         Integer dayId = toTest.addDay(dayToAdd);
         Day addedDayToCheck = toTest.getDayById(2);

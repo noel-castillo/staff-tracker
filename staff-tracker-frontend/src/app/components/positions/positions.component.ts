@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Employee } from 'src/app/models/employee';
 import { Position } from 'src/app/models/position';
+import { EmployeeService } from 'src/app/services/employee.service';
 import { PositionService } from 'src/app/services/position.service';
 
 @Component({
@@ -14,13 +16,21 @@ export class PositionsComponent implements OnInit {
   positionToEdit: Position;
   showAddPositionForm: boolean = false;
   showEditPositionForm: boolean = false;
+  employee: Employee = new Employee();
 
-  constructor(private posService : PositionService) { }
+  constructor(private posService : PositionService, private empService: EmployeeService) { }
 
   ngOnInit(): void {
     this.posService.getAllPositions().subscribe(list => {
-      this.positions = list
+      this.positions = list;
+     
     });
+
+    this.positions.forEach(function (position) {
+      position.employee = this.empService.getEmployee(position.employeeId);
+      console.log(position.employee);
+  });
+  
   }
 
   addPosition(): void {

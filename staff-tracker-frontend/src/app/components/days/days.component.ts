@@ -12,9 +12,11 @@ export class DaysComponent implements OnInit {
 
   days: Day[];
   showAddDayForm: boolean = false;
+  showAddPositionForm: boolean = false;
   showEditDayForm: boolean = false;
   newDay: Day = new Day();
   dayToEdit: Day;
+  dayId: number;
 
   constructor(private dayService: DayService, private router: Router) { }
 
@@ -78,6 +80,10 @@ export class DaysComponent implements OnInit {
     this.dayService.getDays().subscribe(list => {
       this.days = list
     });
+  }
+
+  addPosition(): void {
+
   }
 
 }

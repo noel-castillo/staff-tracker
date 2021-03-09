@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Day } from 'src/app/models/day';
 import { Week } from 'src/app/models/week';
+import { DayService } from 'src/app/services/day.service';
 import { WeekService } from 'src/app/services/week.service';
 
 @Component({
@@ -15,8 +17,10 @@ export class WeeksComponent implements OnInit {
   showEditWeekForm: boolean = false;
   newWeek: Week = new Week();
   weekToEdit: Week;
+  viewWeekDiv: boolean = true;
+  days: Day[];
 
-  constructor(private weekService: WeekService, private router: Router) { }
+  constructor(private weekService: WeekService, private dayService: DayService, private router: Router) { }
 
   ngOnInit(): void {
     this.weekService.getWeeks().subscribe(list => {
@@ -78,6 +82,14 @@ export class WeeksComponent implements OnInit {
     this.weekService.getWeeks().subscribe(list => {
       this.weeks = list
     });
+  }
+
+  viewWeek(week: Week): void {
+    this.viewWeekDiv = false;
+    this.dayService.getDaysByRange(week.startDate, week.endDate).subscribe(list => {
+      this.days = list
+    });
+    console.log(this.days);
   }
 
 }

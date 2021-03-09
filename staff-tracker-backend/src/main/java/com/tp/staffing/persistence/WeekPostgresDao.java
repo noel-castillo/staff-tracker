@@ -1,5 +1,6 @@
 package com.tp.staffing.persistence;
 
+import com.tp.staffing.model.Day;
 import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Week;
 import com.tp.staffing.persistence.mappers.EmployeeMapper;
@@ -23,9 +24,20 @@ public class WeekPostgresDao implements WeekDAO {
     @Override  //Adds a Week to the database and returns it's id.
     public Integer addWeek(Week week) {
 
-        return template.query("INSERT INTO public.\"Week\"(\"startDate\", \"endDate\")" +
+        Integer weekId = template.query("INSERT INTO public.\"Week\"(\"startDate\", \"endDate\")" +
                 "VALUES ( '" + week.getStartDate() + "', '" + week.getEndDate() + "') " +
                 "RETURNING \"id\";", new IdMapper()).get(0);
+
+        for(int i = 0; i < 7; i++){
+            Day day = new Day();
+            day.setDate(week.getStartDate().plusDays(i));
+            day.setWeekId(weekId);
+            template.execute("INSERT INTO public.\"Day\"(\"date\", \"weekId\")" +
+                    "VALUES ( '" + day.getDate() + "', '" + day.getWeekId() + "') " +
+                    "RETURNING \"id\";");
+        }
+
+        return weekId;
     }
 
     @Override //Returns a Week from the database with the given id.

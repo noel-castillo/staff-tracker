@@ -22,10 +22,13 @@
                                             Status
                                         </th>
                                         <th>
-                                            Days
+                                            Date
                                         </th>
                                         <th>
-                                            Shift
+                                            Start Time
+                                        </th>
+                                        <th>
+                                            End Time
                                         </th>
                                     </thead>
                                     <tbody>
@@ -37,16 +40,24 @@
                                             <td>
                                                 {{position.title}}
                                             </td>
-                                            <td>
-                                                ---
+                                            <td *ngIf="position.employeeId == 0" style="color:rgb(240, 35, 35);">
+                                                Vacant
+                                            </td>
+                                            <td *ngIf="position.employeeId != 0" style="color:rgb(9, 241, 9);">
+                                                Filled
                                             </td>
                                             <td>
-                                                ---
+                                                in progress
                                             </td>
                                             <td>
-                                                ---
+                                                {{position.startTime}}
                                             </td>
                                             <td>
+                                                {{position.endTime}}
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-info" (click)="assignEmployee(position)">Assign Employee&emsp;</button>
+
                                                 <button type="submit" class="btn btn-warning" (click)="showEdit(position)">Edit&emsp;</button>
 
                                                 <button type="submit" class="btn btn-danger" (click)="deletePosition(position.id)">Delete</button>
@@ -72,15 +83,15 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Status</label>
-                                                    <input type="text" class="form-control" name="status" [(ngModel)]="newPosition.status">
+                                                    <input type="text" class="form-control" name="employeeId" value="newPosition.employeeId" [(ngModel)]="newPosition.employeeId">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Days</label>
-                                                    <input type="text" class="form-control" name="days" [(ngModel)]="newPosition.days">
+                                                    <label class="bmd-label-floating">Date</label>
+                                                    <input type="text" class="form-control" name="days">
                                                 </div>
                                             </div>
                                         </div>
@@ -120,13 +131,13 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Status</label>
-                                                    <input type="text" class="form-control" name="status" value="positionToEdit.status" [(ngModel)]="positionToEdit.status">
+                                                    <input type="text" class="form-control" name="status" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Days</label>
-                                                    <input type="email" class="form-control" name="days" value="positionToEdit.days" [(ngModel)]="positionToEdit.days">
+                                                    <label class="bmd-label-floating">Date</label>
+                                                    <input type="email" class="form-control" name="days">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">

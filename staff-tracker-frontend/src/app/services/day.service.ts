@@ -50,6 +50,18 @@ export class DayService {
       );
   }
 
+  getDaysByRange(startDate: Date, endDate: Date): Observable<Day[]> {
+    return this.http.get<Day[]>(this.baseURL + "/days/" + startDate + "/" + endDate)
+      .pipe(
+        tap(x => console.log(x)),
+        catchError(err => {
+          console.log(err);
+          let empty: Day[] = [];
+          return of(empty);
+        })
+      );
+  }
+
   editDay(day: Day, id: number): Observable<Day> {
     return this.http.put<Day>(this.baseURL + "/days/" + id, day, this.httpOptions)
       .pipe(
