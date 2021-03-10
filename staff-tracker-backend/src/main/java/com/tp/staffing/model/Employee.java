@@ -13,6 +13,7 @@ public class Employee {
     public String address; //Can be null
     public boolean enabled; //Set to true upon being added to database
     public String[] days;
+    public List<Position> positions;
 
     // C O N S T R U C T O R S
 
@@ -103,5 +104,13 @@ public class Employee {
 
     public void setDays(String[] days) {
         this.days = days;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
     }
 }

@@ -11,19 +11,19 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item" (click)="viewWeekComponent = true" (click)="viewEmployeesComponent = false" (click)="viewScheduleComponent = false">
+            <li class="nav-item" (click)="viewWeekComponent = true" (click)="viewWeekDiv = true" (click)="viewEmployeesComponent = false" (click)="viewScheduleComponent = false" (click)="viewEmployees = true">
                 <a class="nav-link">
                     <i class="material-icons">dashboard</i>
                     <p>Schedule</p>
                 </a>
             </li>
-            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = true" (click)="viewScheduleComponent = false" (click)="empReload()">
+            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = true" (click)="viewScheduleComponent = false" (click)="empReload()" (click)="viewEmployees = true">
                 <a class="nav-link">
                     <i class="material-icons">person</i>
                     <p>Employees</p>
                 </a>
             </li>
-            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = false" (click)="viewScheduleComponent = true">
+            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = false" (click)="viewScheduleComponent = true" (click)="viewEmployees = true">
                 <a class="nav-link">
                     <i class="material-icons">content_paste</i>
                     <p>Print Schedule</p>
@@ -297,7 +297,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card">
+                        <div class="card" *ngIf="viewEmployees">
                             <div class="card-header card-header-info">
                                 <h4 class="card-title ">Employees</h4>
                             </div>
@@ -433,6 +433,43 @@
                                         </form>
                                     </div>
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="!viewEmployees">
+                            <div class="card-header card-header-info">
+                                <h4 class="card-title ">{{employeeInView.firstName}} {{employeeInView.lastName}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <button type="submit" class="btn btn-info pull-right" (click)="viewEmployees = true">Back</button>
+                                    <table class="table">
+
+                                        <thead class=" text-info">
+                                            <th>
+                                                Position
+                                            </th>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Shift
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let position of employeeInView.positions" [position]="position">
+                                                <td>
+                                                    {{position.title}}
+                                                </td>
+                                                <td>
+                                                    Date
+                                                </td>
+                                                <td>
+                                                    {{position.shift}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

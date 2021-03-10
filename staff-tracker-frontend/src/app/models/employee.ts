@@ -1,3 +1,4 @@
+import { Position } from 'src/app/models/position';
 export class Employee {
     id: number;
     firstName: string;
@@ -6,6 +7,7 @@ export class Employee {
     phone: string;
     address: string;
     enabled: boolean;
+    positions: Position[];
 
     constructor(
         id?: number,

@@ -40,6 +40,8 @@ export class WeeksComponent implements OnInit {
   showEditEmployeeForm: boolean = false;
   newEmployee: Employee = new Employee();
   employeeToEdit: Employee;
+  employeeInView: Employee = new Employee();
+  viewEmployees: boolean = true;
 
   constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private employeeService: EmployeeService, private router: Router) { }
 
@@ -213,7 +215,8 @@ export class WeeksComponent implements OnInit {
   }
 
   viewEmployeeSchedule(employee: Employee): void {
-
+    this.employeeInView = employee;
+    this.viewEmployees = false;
   }
 
 }

@@ -1,9 +1,11 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Employee;
+import com.tp.staffing.model.Position;
 import com.tp.staffing.model.Week;
 import com.tp.staffing.persistence.mappers.EmployeeMapper;
 import com.tp.staffing.persistence.mappers.IdMapper;
+import com.tp.staffing.persistence.mappers.PositionMapper;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -71,6 +73,12 @@ public class EmployeePostgresDao implements EmployeeDAO {
 
         if (employees.isEmpty()) {
             return null;
+        }
+        for(Employee employee : employees) {
+            List<Position> positions = template.query("SELECT *\n" +
+                    "\tFROM public.\"Position\"\n" +
+                    "\tWHERE \"Position\".\"employeeId\" = '" + employee.getId() + "'", new PositionMapper());
+            employee.setPositions(positions);
         }
         Collections.sort(employees, new SortByName());
         return employees;
