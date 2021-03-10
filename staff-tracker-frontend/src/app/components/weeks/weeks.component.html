@@ -1,265 +1,435 @@
-<div class="main-panel" *ngIf="viewWeekDiv">
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header card-header-info">
-                            <h4 class="card-title ">Weeks</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <button *ngIf="!(showAddWeekForm || showEditWeekForm || showAddPositionForm || showEditPositionForm)" type="submit" class="btn btn-info pull-right" (click)="showAddWeekForm = true">Add Week</button>
-                                <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm || showAddPositionForm || showEditPositionForm)">
+<div class="sidebar" data-color="azure" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
-                                    <thead class=" text-info">
-                                        <th>
-                                            Start Date
-                                        </th>
-                                        <th>
-                                            End Date
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let week of weeks" [week]="week">
-                                            <td>
-                                                {{week.startDate}}
-                                            </td>
-                                            <td>
-                                                {{week.endDate}}
-                                            </td>
-                                            <td>
-                                                <button type="submit" class="btn btn-info" (click)="viewWeek(week)">View Details&emsp;</button>
+      Tip 2: you can also add an image using data-image tag
+  -->
+    <div class="logo">
+        <p class="simple-text logo-normal">
+            Staff Scheduler
+        </p>
+    </div>
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li class="nav-item" (click)="viewWeekComponent = true" (click)="viewEmployeesComponent = false">
+                <a class="nav-link">
+                    <i class="material-icons">dashboard</i>
+                    <p>Schedule</p>
+                </a>
+            </li>
+            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = true">
+                <a class="nav-link">
+                    <i class="material-icons">person</i>
+                    <p>Employees</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link">
+                    <i class="material-icons">content_paste</i>
+                    <p>Positions</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div *ngIf="viewWeekComponent">
+    <div class="main-panel" *ngIf="viewWeekDiv">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-info">
+                                <h4 class="card-title ">Weeks</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <button *ngIf="!(showAddWeekForm || showEditWeekForm || showAddPositionForm || showEditPositionForm)" type="submit" class="btn btn-info pull-right" (click)="showAddWeekForm = true">Add Week</button>
+                                    <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm || showAddPositionForm || showEditPositionForm)">
 
-                                                <button type="submit" class="btn btn-warning" (click)="showEdit(week)">Edit&emsp;</button>
+                                        <thead class=" text-info">
+                                            <th>
+                                                Start Date
+                                            </th>
+                                            <th>
+                                                End Date
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let week of weeks" [week]="week">
+                                                <td>
+                                                    {{week.startDate}}
+                                                </td>
+                                                <td>
+                                                    {{week.endDate}}
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-info" (click)="viewWeek(week)">View Details&emsp;</button>
 
-                                                <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                    <button type="submit" class="btn btn-warning" (click)="showEdit(week)">Edit&emsp;</button>
+
+                                                    <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
 
 
-                                <div *ngIf="showAddWeekForm" class="card-body">
-                                    <button *ngIf="showAddWeekForm" type="submit" class="btn btn-danger pull-right" (click)="showAddWeekForm = false">Cancel</button>
-                                    <br>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <p>Start Date: </p>
-                                                    <label class="bmd-label-floating"></label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="startDate" [(ngModel)]="newWeek.startDate" class="form-control" placeholder="Start Date">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
+                                    <div *ngIf="showAddWeekForm" class="card-body">
+                                        <button *ngIf="showAddWeekForm" type="submit" class="btn btn-danger pull-right" (click)="showAddWeekForm = false">Cancel</button>
+                                        <br>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <p>Start Date: </p>
+                                                        <label class="bmd-label-floating"></label>
+                                                        <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                            <input type="date" name="startDate" [(ngModel)]="newWeek.startDate" class="form-control" placeholder="Start Date">
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating"></label>
+                                                        <p>End Date: </p>
+                                                        <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                            <input type="date" name="endDate" [(ngModel)]="newWeek.endDate" class="form-control" placeholder="End Date">
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating"></label>
-                                                    <p>End Date: </p>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="endDate" [(ngModel)]="newWeek.endDate" class="form-control" placeholder="End Date">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="addWeek()">Submit New Week</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+
+                                    <div *ngIf="showEditWeekForm" class="card-body">
+                                        <button *ngIf="showEditWeekForm" type="submit" class="btn btn-danger pull-right" (click)="showEditWeekForm = false">Cancel</button>
+                                        <br>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Start Date</label>
+                                                        <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                            <input type="date" name="startDate" value="weekToEdit.startDate" [(ngModel)]="weekToEdit.startDate" class="form-control">
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">End Date</label>
+                                                        <div class="input-group date" data-date-format="dd.mm.yyyy">
+                                                            <input type="date" name="endDate" value="weekToEdit.endDate" [(ngModel)]="weekToEdit.endDate" class="form-control">
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-th"></span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-info pull-left" (click)="addWeek()">Submit New Week</button>
-                                        <div class="clearfix"></div>
-                                    </form>
+
+                                            <button type="submit" class="btn btn-info pull-left" (click)="editWeek()">Submit Edit</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+
                                 </div>
-
-                                <div *ngIf="showEditWeekForm" class="card-body">
-                                    <button *ngIf="showEditWeekForm" type="submit" class="btn btn-danger pull-right" (click)="showEditWeekForm = false">Cancel</button>
-                                    <br>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Start Date</label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="startDate" value="weekToEdit.startDate" [(ngModel)]="weekToEdit.startDate" class="form-control">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">End Date</label>
-                                                    <div class="input-group date" data-date-format="dd.mm.yyyy">
-                                                        <input type="date" name="endDate" value="weekToEdit.endDate" [(ngModel)]="weekToEdit.endDate" class="form-control">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-info pull-left" (click)="editWeek()">Submit Edit</button>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
-
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-panel" *ngIf="!viewWeekDiv">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
+
+                        <div class="card" *ngFor="let day of days" [day]="day" style="padding-top: 25px;">
+                            <div class="card-header card-header-info" (click)="day.expand = !day.expand">
+                                <h4 class="card-title ">{{day.date}}</h4>
+                            </div>
+
+                            <div class="card-body" *ngIf="day.expand">
+                                <div class="table-responsive">
+
+                                    <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
+
+                                        <thead class=" text-info">
+                                            <th>
+                                                Position
+                                            </th>
+                                            <th>
+                                                Shift
+                                            </th>
+                                            <th>
+                                                Employee
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let position of day.positions" [position]="position">
+
+                                                <td>
+                                                    {{position.title}}
+                                                </td>
+                                                <td>
+                                                    {{position.shift}}
+                                                </td>
+                                                <td *ngIf="position.employeeId != 0" style="color:rgba(67, 170, 67, 0.733);">
+                                                    {{position.employee.firstName}} {{position.employee.lastName}}
+                                                </td>
+                                                <td *ngIf="position.employeeId == 0" style="color:rgb(240, 35, 35);">
+                                                    Vacant
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-warning" (click)="displayEditPosition(position)">Edit&emsp;</button>
+
+                                                    <button type="submit" class="btn btn-danger" (click)="deletePosition(position.id)">Delete</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <button type="submit" class="btn btn-info" (click)="displayAddPosition(day.id)">Add Position&emsp;</button>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+                                    <div *ngIf="showAddPositionForm" class="card-body">
+                                        <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = !showAddPositionForm">Cancel</button>
+                                        <br>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Title</label>
+                                                        <input type="text" class="form-control" name="title" [(ngModel)]="newPosition.title">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Employee</label>
+                                                        <input type="number" class="form-control" name="employeeId" [(ngModel)]="newPosition.employeeId">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Shift</label>
+                                                        <input type="text" class="form-control" name="shift" [(ngModel)]="newPosition.shift">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-info pull-left" (click)="addPositionWithDay()" (click)="showAddPositionForm = !showAddPositionForm">Submit New Position</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+
+                                    <div *ngIf="showEditPositionForm" class="card-body">
+                                        <button *ngIf="showEditPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showEditPositionForm = false">Cancel</button>
+                                        <br>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Title</label>
+                                                        <input type="text" class="form-control" name="title" value="positionToEdit.title" [(ngModel)]="positionToEdit.title">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Shift</label>
+                                                        <input type="email" class="form-control" name="shift" value="positionToEdit.shift" [(ngModel)]="positionToEdit.shift">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Employee</label>
+                                                        <input type="number" class="form-control" name="employeeId" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="editPosition()">Submit Edit</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="main-panel" *ngIf="!viewWeekDiv">
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
+<div *ngIf="viewEmployeesComponent">
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-info">
+                                <h4 class="card-title ">Employees</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <button *ngIf="!(showAddEmployeeForm || showEditEmployeeForm)" type="submit" class="btn btn-info pull-right" (click)="showAddEmployeeForm = true">Add Employee</button>
+                                    <table class="table" *ngIf="!(showAddEmployeeForm || showEditEmployeeForm)">
 
-                    <div class="card" *ngFor="let day of days" [day]="day" style="padding-top: 25px;">
-                        <div class="card-header card-header-info" (click)="day.expand = !day.expand">
-                            <h4 class="card-title ">{{day.date}}</h4>
-                        </div>
+                                        <thead class=" text-info">
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <th>
+                                                Phone
+                                            </th>
+                                            <th>
+                                                Address
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let employee of employees" [employee]="employee">
+                                                <td>
+                                                    {{employee.firstName}} {{employee.lastName}}
+                                                </td>
+                                                <td>
+                                                    {{employee.email}}
+                                                </td>
+                                                <td>
+                                                    {{employee.phone}}
+                                                </td>
+                                                <td>
+                                                    {{employee.address}}
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-warning" (click)="showEmpEdit(employee)">Edit&emsp;</button>
 
-                        <div class="card-body" *ngIf="day.expand">
-                            <div class="table-responsive">
+                                                    <button type="submit" class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                                <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
-
-                                    <thead class=" text-info">
-                                        <th>
-                                            Position
-                                        </th>
-                                        <th>
-                                            Shift
-                                        </th>
-                                        <th>
-                                            Employee
-                                        </th>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let position of day.positions" [position]="position">
-
-                                            <td>
-                                                {{position.title}}
-                                            </td>
-                                            <td>
-                                                {{position.shift}}
-                                            </td>
-                                            <td *ngIf="position.employeeId != 0" style="color:rgba(67, 170, 67, 0.733);">
-                                                {{position.employee.firstName}} {{position.employee.lastName}}
-                                            </td>
-                                            <td *ngIf="position.employeeId == 0" style="color:rgb(240, 35, 35);">
-                                                Vacant
-                                            </td>
-                                            <td>
-                                                <button type="submit" class="btn btn-warning" (click)="displayEditPosition(position)">Edit&emsp;</button>
-
-                                                <button type="submit" class="btn btn-danger" (click)="deletePosition(position.id)">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <button type="submit" class="btn btn-info" (click)="displayAddPosition(day.id)">Add Position&emsp;</button>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-
-
-                                <div *ngIf="showAddPositionForm" class="card-body">
-                                    <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = !showAddPositionForm">Cancel</button>
-                                    <br>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Title</label>
-                                                    <input type="text" class="form-control" name="title" [(ngModel)]="newPosition.title">
+                                    <div *ngIf="showAddEmployeeForm" class="card-body">
+                                        <button *ngIf="showAddEmployeeForm" type="submit" class="btn btn-danger pull-right" (click)="showAddEmployeeForm = false">Cancel</button>
+                                        <br>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">First Name</label>
+                                                        <input type="text" class="form-control" name="firstName" [(ngModel)]="newEmployee.firstName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Last Name</label>
+                                                        <input type="text" class="form-control" name="lastName" [(ngModel)]="newEmployee.lastName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Email Address</label>
+                                                        <input type="email" class="form-control" name="email" [(ngModel)]="newEmployee.email">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Phone</label>
+                                                        <input type="text" class="form-control" name="phone" [(ngModel)]="newEmployee.phone">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Employee</label>
-                                                    <input type="number" class="form-control" name="employeeId" [(ngModel)]="newPosition.employeeId">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Adress</label>
+                                                        <input type="text" class="form-control" name="address" [(ngModel)]="newEmployee.address">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Shift</label>
-                                                    <input type="text" class="form-control" name="shift" [(ngModel)]="newPosition.shift">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Start Time</label>
-                                                    <input type="number" class="form-control" name="startTime" [(ngModel)]="newPosition.startTime">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">End Time</label>
-                                                    <input type="number" class="form-control" name="endTime" [(ngModel)]="newPosition.endTime">
-                                                </div>
-                                            </div>
-                                        </div> -->
 
-                                        <button type="submit" class="btn btn-info pull-left" (click)="addPositionWithDay()" (click)="showAddPositionForm = !showAddPositionForm">Submit New Position</button>
-                                        <div class="clearfix"></div>
-                                    </form>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="addEmployee()">Submit New Employee</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+
+                                    <div *ngIf="showEditEmployeeForm" class="card-body">
+                                        <button *ngIf="showEditEmployeeForm" type="submit" class="btn btn-danger pull-right" (click)="showEditEmployeeForm = false">Cancel</button>
+                                        <br>
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">First Name</label>
+                                                        <input type="text" class="form-control" name="firstName" value="employeeToEdit.firstName" [(ngModel)]="employeeToEdit.firstName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Last Name</label>
+                                                        <input type="text" class="form-control" name="lastName" value="employeeToEdit.lastName" [(ngModel)]="employeeToEdit.lastName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Email Address</label>
+                                                        <input type="email" class="form-control" name="email" value="employeeToEdit.email" [(ngModel)]="employeeToEdit.email">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Phone</label>
+                                                        <input type="text" class="form-control" name="phone" value="employeeToEdit.phone" [(ngModel)]="employeeToEdit.phone">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Adress</label>
+                                                        <input type="text" class="form-control" name="address" value="employeeToEdit.address" [(ngModel)]="employeeToEdit.address">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-info pull-left" (click)="editEmployee()">Submit Edit</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+                                    </div>
+
                                 </div>
-
-                                <div *ngIf="showEditPositionForm" class="card-body">
-                                    <button *ngIf="showEditPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showEditPositionForm = false">Cancel</button>
-                                    <br>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Title</label>
-                                                    <input type="text" class="form-control" name="title" value="positionToEdit.title" [(ngModel)]="positionToEdit.title">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Employee</label>
-                                                    <input type="number" class="form-control" name="employeeId" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Shift</label>
-                                                    <input type="email" class="form-control" name="shift" value="positionToEdit.shift" [(ngModel)]="positionToEdit.shift">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-info pull-left" (click)="editPosition()">Submit Edit</button>
-                                        <div class="clearfix"></div>
-                                    </form>
-                                </div>
-
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>

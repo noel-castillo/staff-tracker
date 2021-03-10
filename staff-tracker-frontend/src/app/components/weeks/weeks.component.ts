@@ -16,6 +16,7 @@ import { EmployeeService } from 'src/app/services/employee.service';
 })
 export class WeeksComponent implements OnInit {
 
+  // Weeks
   weeks: Week[];
   showAddWeekForm: boolean = false;
   showEditWeekForm: boolean = false;
@@ -30,6 +31,14 @@ export class WeeksComponent implements OnInit {
   positionToEdit: Position = new Position();
   weekInView: Week = new Week();
   employees: Employee[];
+  viewWeekComponent: boolean = true;
+  viewEmployeesComponent: boolean = false;
+
+  // Employees
+  showAddEmployeeForm: boolean = false;
+  showEditEmployeeForm: boolean = false;
+  newEmployee: Employee = new Employee();
+  employeeToEdit: Employee;
 
   constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private employeeService: EmployeeService, private router: Router) { }
 
@@ -42,6 +51,7 @@ export class WeeksComponent implements OnInit {
     });
   }
 
+  // Weeks
   addWeek(): void {
     console.log(this.newWeek);
     this.showAddWeekForm = false;
@@ -140,6 +150,64 @@ export class WeeksComponent implements OnInit {
     this.positionService.deletePosition(positionId).subscribe(list => {
       this.reloadWeek(this.weekInView);
     })
+  }
+
+  // Employees
+  addEmployee(): void {
+    this.newEmployee.enabled = true;
+    console.log(this.newEmployee);
+    this.showAddEmployeeForm = false;
+    this.employeeService.addEmployee(this.newEmployee).subscribe(
+      (aGoodThingHappened) => {
+        console.log(aGoodThingHappened);
+        this.newEmployee = new Employee();
+        this.empReload();
+      },
+      (didntWork) => {
+        console.error('Employee Component addEmployee() DID NOT WORK');
+        this.empReload();
+      }
+    );
+  }
+
+  showEmpEdit(employee: Employee){
+    this.showEditEmployeeForm = true;
+    this.employeeToEdit = employee;
+  }
+
+  editEmployee(): void {
+    this.showEditEmployeeForm = false;
+    this.employeeService.editEmployee(this.employeeToEdit, this.employeeToEdit.id).subscribe(
+      (aGoodThingHappened) => {
+        console.log(aGoodThingHappened);
+        this.empReload();
+      },
+      (didntWork) => {
+        console.error('Employee Component editEmployee(employee) DID NOT WORK');
+        this.empReload();
+      }
+    );
+
+  }
+
+  deleteEmployee(id: number): void {
+    this.employeeService.deleteEmployee(id).subscribe(
+      (aGoodThingHappened) => {
+        console.log(aGoodThingHappened);
+        this.empReload();
+      },
+      (didntWork) => {
+        console.error('Employee Component deleteEmployee(id) DID NOT WORK');
+        this.empReload();
+      }
+    );
+
+  }
+
+  empReload(): void {
+    this.employeeService.getAllEmployees().subscribe(list => {
+      this.employees = list
+    });
   }
 
 }

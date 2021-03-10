@@ -32,16 +32,16 @@ export class EmployeesComponent implements OnInit {
       (aGoodThingHappened) => {
         console.log(aGoodThingHappened);
         this.newEmployee = new Employee();
-        this.reload();
+        this.empReload();
       },
       (didntWork) => {
         console.error('Employee Component addEmployee() DID NOT WORK');
-        this.reload();
+        this.empReload();
       }
     );
   }
 
-  showEdit(employee: Employee){
+  showEmpEdit(employee: Employee){
     this.showEditEmployeeForm = true;
     this.employeeToEdit = employee;
   }
@@ -51,11 +51,11 @@ export class EmployeesComponent implements OnInit {
     this.empService.editEmployee(this.employeeToEdit, this.employeeToEdit.id).subscribe(
       (aGoodThingHappened) => {
         console.log(aGoodThingHappened);
-        this.reload();
+        this.empReload();
       },
       (didntWork) => {
         console.error('Employee Component editEmployee(employee) DID NOT WORK');
-        this.reload();
+        this.empReload();
       }
     );
 
@@ -65,17 +65,17 @@ export class EmployeesComponent implements OnInit {
     this.empService.deleteEmployee(id).subscribe(
       (aGoodThingHappened) => {
         console.log(aGoodThingHappened);
-        this.reload();
+        this.empReload();
       },
       (didntWork) => {
         console.error('Employee Component deleteEmployee(id) DID NOT WORK');
-        this.reload();
+        this.empReload();
       }
     );
 
   }
 
-  reload(): void {
+  empReload(): void {
     this.empService.getAllEmployees().subscribe(list => {
       this.employees = list
     });
