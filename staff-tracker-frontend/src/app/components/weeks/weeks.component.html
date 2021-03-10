@@ -48,7 +48,8 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Start Date</label>
+                                                    <p>Start Date: </p>
+                                                    <label class="bmd-label-floating"></label>
                                                     <div class="input-group date" data-date-format="dd.mm.yyyy">
                                                         <input type="date" name="startDate" [(ngModel)]="newWeek.startDate" class="form-control" placeholder="Start Date">
                                                         <div class="input-group-addon">
@@ -59,7 +60,8 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">End Date</label>
+                                                    <label class="bmd-label-floating"></label>
+                                                    <p>End Date: </p>
                                                     <div class="input-group date" data-date-format="dd.mm.yyyy">
                                                         <input type="date" name="endDate" [(ngModel)]="newWeek.endDate" class="form-control" placeholder="End Date">
                                                         <div class="input-group-addon">
@@ -161,11 +163,9 @@
                                                 Vacant
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-info" (click)="viewWeek(week)">View Details&emsp;</button>
+                                                <button type="submit" class="btn btn-warning" (click)="displayEditPosition()">Edit&emsp;</button>
 
-                                                <button type="submit" class="btn btn-warning" (click)="showEdit(week)">Edit&emsp;</button>
-
-                                                <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button>
+                                                <button type="submit" class="btn btn-danger" (click)="deletePosition(position.id)">Delete</button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -204,7 +204,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Start Time</label>
@@ -219,7 +219,7 @@
                                                     <input type="number" class="form-control" name="endTime" [(ngModel)]="newPosition.endTime">
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <button type="submit" class="btn btn-info pull-left" (click)="addPositionWithDay()" (click)="showAddPositionForm = !showAddPositionForm">Submit New Position</button>
                                         <div class="clearfix"></div>

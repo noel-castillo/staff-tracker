@@ -160,6 +160,8 @@ public class PositionPostgresDao implements PositionDAO {
         if (getPositionById(id) == null) {
             return false;
         } else {
+            template.execute("DELETE FROM public.\"PositionDay\" " +
+                    "WHERE \"positionId\" = " + id + ";");
             template.execute("DELETE FROM public.\"Position\" " +
                     "WHERE \"id\" = " + id + ";");
             return true;

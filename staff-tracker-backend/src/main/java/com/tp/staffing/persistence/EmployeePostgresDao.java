@@ -1,6 +1,7 @@
 package com.tp.staffing.persistence;
 
 import com.tp.staffing.model.Employee;
+import com.tp.staffing.model.Week;
 import com.tp.staffing.persistence.mappers.EmployeeMapper;
 import com.tp.staffing.persistence.mappers.IdMapper;
 import org.apache.catalina.mapper.Mapper;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -56,7 +59,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
         if (employees.isEmpty()) {
             return null;
         }
-
+        Collections.sort(employees, new SortByName());
         return employees;
     }
 
@@ -69,7 +72,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
         if (employees.isEmpty()) {
             return null;
         }
-
+        Collections.sort(employees, new SortByName());
         return employees;
     }
 
@@ -99,6 +102,13 @@ public class EmployeePostgresDao implements EmployeeDAO {
             template.execute("DELETE FROM public.\"Employee\" " +
                     "WHERE \"id\" = " + id + ";");
             return true;
+        }
+    }
+
+    static class SortByName implements Comparator<Employee> {
+        @Override
+        public int compare(Employee a, Employee b) {
+            return a.getFirstName().compareTo(b.getFirstName());
         }
     }
 

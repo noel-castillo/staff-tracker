@@ -26,6 +26,7 @@ export class WeeksComponent implements OnInit {
   dayIdToAdd: number;
   newPosition: Position = new Position();
   positionToEdit: Position = new Position();
+  weekInView: Week = new Week();
 
   constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private router: Router) { }
 
@@ -91,8 +92,15 @@ export class WeeksComponent implements OnInit {
     });
   }
 
+  reloadWeek(week: Week): void{
+    this.dayService.getDaysByRange(week.startDate, week.endDate).subscribe(list => {
+      this.days = list
+    });
+  }
+
   viewWeek(week: Week): void {
     this.viewWeekDiv = false;
+    this.weekInView = week;
     this.dayService.getDaysByRange(week.startDate, week.endDate).subscribe(list => {
       this.days = list
     });
@@ -101,13 +109,19 @@ export class WeeksComponent implements OnInit {
 
   addPositionWithDay(): void {
     this.positionService.addPositionWithDay(this.newPosition, this.dayIdToAdd).subscribe(list => {
-      this.reload();
+      this.reloadWeek(this.weekInView);
     });
   }
 
   displayAddPosition(dayId: number): void{
     this.dayIdToAdd = dayId;
     this.showAddPositionForm = !this.showAddPositionForm;
+  }
+
+  deletePosition(positionId: number): void{
+    this.positionService.deletePosition(positionId).subscribe(list => {
+      this.reloadWeek(this.weekInView);
+    })
   }
 
 }

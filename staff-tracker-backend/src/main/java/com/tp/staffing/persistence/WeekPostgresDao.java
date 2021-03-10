@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -62,7 +64,7 @@ public class WeekPostgresDao implements WeekDAO {
         if (weeks.isEmpty()) {
             return null;
         }
-
+        Collections.sort(weeks, new SortByDate());
         return weeks;
     }
 
@@ -75,6 +77,7 @@ public class WeekPostgresDao implements WeekDAO {
         if (weeks.isEmpty()) {
             return null;
         }
+        Collections.sort(weeks, new SortByDate());
 
         return weeks;
     }
@@ -88,6 +91,8 @@ public class WeekPostgresDao implements WeekDAO {
         if (weeks.isEmpty()) {
             return null;
         }
+
+        Collections.sort(weeks, new SortByDate());
 
         return weeks;
     }
@@ -105,6 +110,8 @@ public class WeekPostgresDao implements WeekDAO {
         if (weeksToReturn.isEmpty()) {
             return null;
         }
+
+        Collections.sort(weeksToReturn, new SortByDate());
 
         return weeksToReturn;
     }
@@ -131,6 +138,13 @@ public class WeekPostgresDao implements WeekDAO {
             template.execute("DELETE FROM public.\"Week\" " +
                     "WHERE \"id\" = " + id + ";");
             return true;
+        }
+    }
+
+    static class SortByDate implements Comparator<Week> {
+        @Override
+        public int compare(Week a, Week b) {
+            return b.getStartDate().compareTo(a.getStartDate());
         }
     }
 
