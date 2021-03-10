@@ -92,7 +92,7 @@ public class EmployeePostgresDao implements EmployeeDAO {
 
                 position.setDays(days);
             }
-
+            Collections.sort(positions, new SortByPositionDate());
             employee.setPositions(positions);
         }
         Collections.sort(employees, new SortByName());
@@ -132,6 +132,13 @@ public class EmployeePostgresDao implements EmployeeDAO {
         @Override
         public int compare(Employee a, Employee b) {
             return a.getFirstName().compareTo(b.getFirstName());
+        }
+    }
+
+    static class SortByPositionDate implements Comparator<Position> {
+        @Override
+        public int compare(Position a, Position b) {
+            return b.getDays().get(0).getDate().compareTo(a.getDays().get(0).getDate());
         }
     }
 
