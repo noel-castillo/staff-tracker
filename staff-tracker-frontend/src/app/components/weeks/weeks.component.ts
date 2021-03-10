@@ -6,6 +6,8 @@ import { DayService } from 'src/app/services/day.service';
 import { PositionService } from 'src/app/services/position.service';
 import { WeekService } from 'src/app/services/week.service';
 import { Position } from 'src/app/models/position';
+import { Employee } from 'src/app/models/employee';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-weeks',
@@ -27,12 +29,16 @@ export class WeeksComponent implements OnInit {
   newPosition: Position = new Position();
   positionToEdit: Position = new Position();
   weekInView: Week = new Week();
+  employees: Employee[];
 
-  constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private router: Router) { }
+  constructor(private weekService: WeekService, private dayService: DayService, private positionService: PositionService, private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit(): void {
     this.weekService.getWeeks().subscribe(list => {
       this.weeks = list
+    });
+    this.employeeService.getAllEmployees().subscribe(list => {
+      this.employees = list
     });
   }
 
@@ -113,9 +119,21 @@ export class WeeksComponent implements OnInit {
     });
   }
 
+  editPosition(): void {
+    this.showEditPositionForm = !this.showEditPositionForm;
+    this.positionService.editPosition(this.positionToEdit, this.positionToEdit.id).subscribe(list => {
+      this.reloadWeek(this.weekInView);
+    });
+  }
+
   displayAddPosition(dayId: number): void{
     this.dayIdToAdd = dayId;
     this.showAddPositionForm = !this.showAddPositionForm;
+  }
+
+  displayEditPosition(position: Position): void{
+    this.positionToEdit = position;
+    this.showEditPositionForm = !this.showEditPositionForm;
   }
 
   deletePosition(positionId: number): void{

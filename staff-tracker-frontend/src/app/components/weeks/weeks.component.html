@@ -156,14 +156,14 @@
                                             <td>
                                                 {{position.shift}}
                                             </td>
-                                            <td *ngIf="position.employeeId != 0" style="color:rgb(9, 241, 9);">
+                                            <td *ngIf="position.employeeId != 0" style="color:rgba(67, 170, 67, 0.733);">
                                                 {{position.employee.firstName}} {{position.employee.lastName}}
                                             </td>
                                             <td *ngIf="position.employeeId == 0" style="color:rgb(240, 35, 35);">
                                                 Vacant
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-warning" (click)="displayEditPosition()">Edit&emsp;</button>
+                                                <button type="submit" class="btn btn-warning" (click)="displayEditPosition(position)">Edit&emsp;</button>
 
                                                 <button type="submit" class="btn btn-danger" (click)="deletePosition(position.id)">Delete</button>
                                             </td>
@@ -245,26 +245,11 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Date</label>
-                                                    <input type="email" class="form-control" name="days">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">Start Time</label>
-                                                    <input type="email" class="form-control" name="startTime" value="positionToEdit.startTime" [(ngModel)]="positionToEdit.startTime">
+                                                    <label class="bmd-label-floating">Shift</label>
+                                                    <input type="email" class="form-control" name="shift" value="positionToEdit.shift" [(ngModel)]="positionToEdit.shift">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="bmd-label-floating">End Time</label>
-                                                    <input type="text" class="form-control" name="endTime" value="positionToEdit.endTime" [(ngModel)]="positionToEdit.endTime">
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <button type="submit" class="btn btn-info pull-left" (click)="editPosition()">Submit Edit</button>
                                         <div class="clearfix"></div>
                                     </form>

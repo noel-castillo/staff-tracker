@@ -42,9 +42,9 @@ export class PositionsComponent implements OnInit {
     );
   }
 
-  showEdit(Position: Position) {
+  showEdit(position: Position) {
     this.showEditPositionForm = true;
-    this.positionToEdit = Position;
+    this.positionToEdit = position;
   }
 
   editPosition(): void {
