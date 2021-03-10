@@ -1,8 +1,10 @@
 package com.tp.staffing.persistence;
 
+import com.tp.staffing.model.Day;
 import com.tp.staffing.model.Employee;
 import com.tp.staffing.model.Position;
 import com.tp.staffing.model.Week;
+import com.tp.staffing.persistence.mappers.DayMapper;
 import com.tp.staffing.persistence.mappers.EmployeeMapper;
 import com.tp.staffing.persistence.mappers.IdMapper;
 import com.tp.staffing.persistence.mappers.PositionMapper;
@@ -78,6 +80,19 @@ public class EmployeePostgresDao implements EmployeeDAO {
             List<Position> positions = template.query("SELECT *\n" +
                     "\tFROM public.\"Position\"\n" +
                     "\tWHERE \"Position\".\"employeeId\" = '" + employee.getId() + "'", new PositionMapper());
+
+            for (Position position : positions) {
+                List<Day> days = template.query("SELECT d.* \n" +
+                        "FROM \"Day\" as d\n" +
+                        "RIGHT JOIN \"PositionDay\" as pd \n" +
+                        "ON d.\"id\" = pd.\"dayId\"\n" +
+                        "RIGHT JOIN \"Position\" as p\n" +
+                        "ON pd.\"positionId\" = p.\"id\"\n" +
+                        "WHERE p.\"id\" = '" + position.getId() + "';", new DayMapper());
+
+                position.setDays(days);
+            }
+
             employee.setPositions(positions);
         }
         Collections.sort(employees, new SortByName());

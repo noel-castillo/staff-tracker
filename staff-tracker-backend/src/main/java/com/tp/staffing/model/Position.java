@@ -14,6 +14,7 @@ public class Position {
     private int endTime; //Can be null
     private Employee employee;
     private String shift;
+    private List<Day> days;
 
 
     // C O N S T R U C T O R S
@@ -94,5 +95,13 @@ public class Position {
 
     public void setShift(String shift) {
         this.shift = shift;
+    }
+
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public void setDays(List<Day> days) {
+        this.days = days;
     }
 }

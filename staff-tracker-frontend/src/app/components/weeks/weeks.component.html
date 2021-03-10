@@ -461,8 +461,8 @@
                                                 <td>
                                                     {{position.title}}
                                                 </td>
-                                                <td>
-                                                    Date
+                                                <td *ngFor="let day of position.days" [day]="day">
+                                                    {{day.date}}
                                                 </td>
                                                 <td>
                                                     {{position.shift}}

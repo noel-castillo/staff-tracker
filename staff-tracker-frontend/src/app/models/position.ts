@@ -1,3 +1,4 @@
+import { Day } from "./day";
 import { Employee } from "./employee";
 
 export class Position {
@@ -8,6 +9,7 @@ export class Position {
     endTime: number;
     shift: string;
     employee: Employee;
+    days: Day[];
 
     constructor(
         id?: number,
@@ -16,7 +18,8 @@ export class Position {
         startTime?: number,
         endTime?: number,
         shift?: string,
-        employee?: Employee
+        employee?: Employee,
+        days?: Day[]
 
     ) {
         this.id = id;
@@ -26,5 +29,6 @@ export class Position {
         this.endTime = endTime;
         this.shift = shift;
         this.employee = employee;
+        this.days = days;
     }
 }
