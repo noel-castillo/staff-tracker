@@ -122,6 +122,9 @@ public class EmployeePostgresDao implements EmployeeDAO {
         if (getEmployeeById(id) == null) {
             return false;
         } else {
+            template.execute("UPDATE public.\"Position\"\n" +
+                    "SET \"employeeId\"=null\n" +
+                    "WHERE \"employeeId\" = " + id + ";");
             template.execute("DELETE FROM public.\"Employee\" " +
                     "WHERE \"id\" = " + id + ";");
             return true;
