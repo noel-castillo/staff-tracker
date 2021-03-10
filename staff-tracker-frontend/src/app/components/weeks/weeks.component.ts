@@ -33,6 +33,7 @@ export class WeeksComponent implements OnInit {
   employees: Employee[];
   viewWeekComponent: boolean = true;
   viewEmployeesComponent: boolean = false;
+  viewScheduleComponent: boolean = false;
 
   // Employees
   showAddEmployeeForm: boolean = false;
@@ -127,6 +128,7 @@ export class WeeksComponent implements OnInit {
     this.positionService.addPositionWithDay(this.newPosition, this.dayIdToAdd).subscribe(list => {
       this.reloadWeek(this.weekInView);
     });
+    this.newPosition = new Position();
   }
 
   editPosition(): void {
@@ -208,6 +210,10 @@ export class WeeksComponent implements OnInit {
     this.employeeService.getAllEmployees().subscribe(list => {
       this.employees = list
     });
+  }
+
+  viewEmployeeSchedule(employee: Employee): void {
+
   }
 
 }

@@ -11,22 +11,22 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item" (click)="viewWeekComponent = true" (click)="viewEmployeesComponent = false">
+            <li class="nav-item" (click)="viewWeekComponent = true" (click)="viewEmployeesComponent = false" (click)="viewScheduleComponent = false">
                 <a class="nav-link">
                     <i class="material-icons">dashboard</i>
                     <p>Schedule</p>
                 </a>
             </li>
-            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = true">
+            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = true" (click)="viewScheduleComponent = false" (click)="empReload()">
                 <a class="nav-link">
                     <i class="material-icons">person</i>
                     <p>Employees</p>
                 </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item" (click)="viewWeekComponent = false" (click)="viewEmployeesComponent = false" (click)="viewScheduleComponent = true">
                 <a class="nav-link">
                     <i class="material-icons">content_paste</i>
-                    <p>Positions</p>
+                    <p>Print Schedule</p>
                 </a>
             </li>
         </ul>
@@ -64,11 +64,13 @@
                                                     {{week.endDate}}
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-info" (click)="viewWeek(week)">View Details&emsp;</button>
+                                                    <button type="submit" class="btn btn-info" (click)="viewWeek(week)">View Week&emsp;</button>
 
                                                     <button type="submit" class="btn btn-warning" (click)="showEdit(week)">Edit&emsp;</button>
 
-                                                    <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button>
+                                                    <button type="submit" class="btn btn-success" (click)="showEdit(week)">Print&emsp;</button>
+
+                                                    <!-- <button type="submit" class="btn btn-danger" (click)="deleteWeek(week.id)">Delete</button> -->
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -159,6 +161,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        <!-- <div class="card col-md-4">
+                            <div class="card-header card-header-info">
+                                <h4 class="card-title ">Daily Schedule</h4>
+                            </div>
+                        </div> -->
                         <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
 
                         <div class="card" *ngFor="let day of days" [day]="day" style="padding-top: 25px;">
@@ -328,6 +335,8 @@
                                                     {{employee.address}}
                                                 </td>
                                                 <td>
+                                                    <button type="submit" class="btn btn-info" (click)="viewEmployeeSchedule(employee)">View Schedule&emsp;</button>
+
                                                     <button type="submit" class="btn btn-warning" (click)="showEmpEdit(employee)">Edit&emsp;</button>
 
                                                     <button type="submit" class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
@@ -433,4 +442,7 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="viewScheduleComponent">
+
 </div>
