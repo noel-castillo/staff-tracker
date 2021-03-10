@@ -139,6 +139,9 @@
                                             Position
                                         </th>
                                         <th>
+                                            Shift
+                                        </th>
+                                        <th>
                                             Employee
                                         </th>
                                     </thead>
@@ -147,6 +150,9 @@
 
                                             <td>
                                                 {{position.title}}
+                                            </td>
+                                            <td>
+                                                {{position.shift}}
                                             </td>
                                             <td *ngIf="position.employeeId != 0" style="color:rgb(9, 241, 9);">
                                                 {{position.employee.firstName}} {{position.employee.lastName}}

@@ -12,6 +12,7 @@ import { PositionsComponent } from './components/positions/positions.component';
 import { WeeksComponent } from './components/weeks/weeks.component';
 import { DaysComponent } from './components/days/days.component';
 import { ShiftsComponent } from './components/shifts/shifts.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ShiftsComponent } from './components/shifts/shifts.component';
     PositionsComponent,
     WeeksComponent,
     DaysComponent,
-    ShiftsComponent
+    ShiftsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
