@@ -35,6 +35,7 @@ export class WeeksComponent implements OnInit {
   viewWeekComponent: boolean = true;
   viewEmployeesComponent: boolean = false;
   viewScheduleComponent: boolean = false;
+  i: number = 0;
 
   // Employees
   showAddEmployeeForm: boolean = false;
@@ -72,7 +73,7 @@ export class WeeksComponent implements OnInit {
     );
   }
 
-  showEdit(Week: Week){
+  showEdit(Week: Week) {
     this.showEditWeekForm = true;
     this.weekToEdit = Week;
   }
@@ -112,7 +113,7 @@ export class WeeksComponent implements OnInit {
     });
   }
 
-  reloadWeek(week: Week): void{
+  reloadWeek(week: Week): void {
     this.dayService.getDaysByRange(week.startDate, week.endDate).subscribe(list => {
       this.days = list
     });
@@ -129,14 +130,18 @@ export class WeeksComponent implements OnInit {
 
   addPositionWithDay(form: NgForm): void {
     this.newPosition.employeeId = form.value.employeeId;
-    this.positionService.addPositionWithDay(this.newPosition, this.dayIdToAdd).subscribe(list => {
-      this.reloadWeek(this.weekInView);
-    });
+    this.i = form.value.quantity;
+    while (this.i != 0) {
+      this.positionService.addPositionWithDay(this.newPosition, this.dayIdToAdd).subscribe(list => {
+        this.reloadWeek(this.weekInView);
+      });
+      this.i--;
+    }
     this.newPosition = new Position();
   }
 
   editPosition(form: NgForm): void {
-    if(form.value.employeeId != ""){
+    if (form.value.employeeId != "") {
       this.positionToEdit.employeeId = form.value.employeeId;
     }
     this.showEditPositionForm = !this.showEditPositionForm;
@@ -145,17 +150,17 @@ export class WeeksComponent implements OnInit {
     });
   }
 
-  displayAddPosition(dayId: number): void{
+  displayAddPosition(dayId: number): void {
     this.dayIdToAdd = dayId;
     this.showAddPositionForm = !this.showAddPositionForm;
   }
 
-  displayEditPosition(position: Position): void{
+  displayEditPosition(position: Position): void {
     this.positionToEdit = position;
     this.showEditPositionForm = !this.showEditPositionForm;
   }
 
-  deletePosition(positionId: number): void{
+  deletePosition(positionId: number): void {
     this.positionService.deletePosition(positionId).subscribe(list => {
       this.reloadWeek(this.weekInView);
     })
@@ -179,7 +184,7 @@ export class WeeksComponent implements OnInit {
     );
   }
 
-  showEmpEdit(employee: Employee){
+  showEmpEdit(employee: Employee) {
     this.showEditEmployeeForm = true;
     this.employeeToEdit = employee;
   }
