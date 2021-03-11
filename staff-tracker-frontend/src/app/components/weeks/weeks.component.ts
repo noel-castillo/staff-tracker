@@ -204,18 +204,21 @@ export class WeeksComponent implements OnInit {
 
   }
 
-  deleteEmployee(id: number): void {
-    this.employeeService.deleteEmployee(id).subscribe(
-      (aGoodThingHappened) => {
-        console.log(aGoodThingHappened);
-        this.empReload();
-      },
-      (didntWork) => {
-        console.error('Employee Component deleteEmployee(id) DID NOT WORK');
-        this.empReload();
-      }
-    );
-
+  deleteEmployee(employee: Employee): void {
+    var result = confirm("Are you sure you want to permanently delete " + employee.firstName + " " + employee.lastName + "? This action will result in all positions held by employee to be vacant.");
+    if (result) {
+      
+      this.employeeService.deleteEmployee(employee.id).subscribe(
+        (aGoodThingHappened) => {
+          console.log(aGoodThingHappened);
+          this.empReload();
+        },
+        (didntWork) => {
+          console.error('Employee Component deleteEmployee(id) DID NOT WORK');
+          this.empReload();
+        }
+      );
+    }
   }
 
   empReload(): void {
@@ -228,5 +231,7 @@ export class WeeksComponent implements OnInit {
     this.employeeInView = employee;
     this.viewEmployees = false;
   }
+
+
 
 }
