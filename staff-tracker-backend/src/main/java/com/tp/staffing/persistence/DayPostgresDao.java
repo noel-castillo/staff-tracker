@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -60,7 +62,8 @@ public class DayPostgresDao implements DayDAO {
                 position.setEmployee(employee);
             }
         }
-
+        Collections.sort(positions, new SortByTitle());
+        Collections.sort(positions, new SortByShift());
         days.get(0).setPositions(positions);
 
         return days.get(0);
@@ -93,7 +96,8 @@ public class DayPostgresDao implements DayDAO {
                     position.setEmployee(employee);
                 }
             }
-
+            Collections.sort(positions, new SortByTitle());
+            Collections.sort(positions, new SortByShift());
             day.setPositions(positions);
         }
 
@@ -132,6 +136,8 @@ public class DayPostgresDao implements DayDAO {
                     position.setEmployee(employee);
                 }
             }
+            Collections.sort(positions, new SortByTitle());
+            Collections.sort(positions, new SortByShift());
             day.setPositions(positions);
         }
 
@@ -160,6 +166,20 @@ public class DayPostgresDao implements DayDAO {
             template.execute("DELETE FROM public.\"Day\" " +
                     "WHERE \"id\" = " + id + ";");
             return true;
+        }
+    }
+
+    static class SortByTitle implements Comparator<Position> {
+        @Override
+        public int compare(Position a, Position b) {
+            return a.getTitle().compareTo(b.getTitle());
+        }
+    }
+
+    static class SortByShift implements Comparator<Position> {
+        @Override
+        public int compare(Position a, Position b) {
+            return a.getShift().compareTo(b.getShift());
         }
     }
 
