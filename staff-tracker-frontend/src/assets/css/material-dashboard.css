@@ -14495,7 +14495,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-background-color="black"] {
-    background-color: #191919;
+    background-color: #e7e424;
 }
 
 .sidebar .sidebar-wrapper {
@@ -14739,7 +14739,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-background-color="black"] .nav .nav-item .nav-link {
-    color: #fff;
+    color: rgb(255, 255, 255);
 }
 
 .sidebar[data-background-color="black"] .nav .nav-item i {
@@ -14766,7 +14766,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 
 .sidebar[data-background-color="black"] .sidebar-background:after {
     background: #000;
-    opacity: .8;
+    opacity: 1;
 }
 
 .sidebar[data-background-color="black"] .nav li .dropdown-menu .dropdown-item {
@@ -14862,7 +14862,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 
 .sidebar[data-image]:after,
 .sidebar.has-image:after {
-    opacity: .77;
+    opacity: 1;
 }
 
 .off-canvas-sidebar .navbar-collapse .nav>li>a,
@@ -14951,7 +14951,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
         z-index: 9999;
     }
     .sidebar-mini .sidebar .logo a.logo-normal {
-        opacity: 0;
+        opacity: 1;
         -webkit-transform: translate3d(-25px, 0, 0);
         -moz-transform: translate3d(-25px, 0, 0);
         -o-transform: translate3d(-25px, 0, 0);
@@ -14967,7 +14967,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
         -o-transform: translate3d(-25px, 0, 0);
         -ms-transform: translate3d(-25px, 0, 0);
         transform: translate3d(-25px, 0, 0);
-        opacity: 0;
+        opacity: 1;
     }
     .sidebar-mini .sidebar:hover {
         width: 260px;
