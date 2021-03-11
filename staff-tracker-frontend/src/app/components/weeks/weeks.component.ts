@@ -8,6 +8,7 @@ import { WeekService } from 'src/app/services/week.service';
 import { Position } from 'src/app/models/position';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-weeks',
@@ -126,14 +127,18 @@ export class WeeksComponent implements OnInit {
     console.log(this.days);
   }
 
-  addPositionWithDay(): void {
+  addPositionWithDay(form: NgForm): void {
+    this.newPosition.employeeId = form.value.employeeId;
     this.positionService.addPositionWithDay(this.newPosition, this.dayIdToAdd).subscribe(list => {
       this.reloadWeek(this.weekInView);
     });
     this.newPosition = new Position();
   }
 
-  editPosition(): void {
+  editPosition(form: NgForm): void {
+    if(form.value.employeeId != ""){
+      this.positionToEdit.employeeId = form.value.employeeId;
+    }
     this.showEditPositionForm = !this.showEditPositionForm;
     this.positionService.editPosition(this.positionToEdit, this.positionToEdit.id).subscribe(list => {
       this.reloadWeek(this.weekInView);

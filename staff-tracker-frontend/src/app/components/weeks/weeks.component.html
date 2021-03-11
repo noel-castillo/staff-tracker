@@ -108,7 +108,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-info pull-left" (click)="addWeek()">Submit New Week</button>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="addWeek()">Save New Week</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -142,7 +142,7 @@
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-info pull-left" (click)="editWeek()">Submit Edit</button>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="editWeek()">Save Edit</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -221,7 +221,7 @@
                                     <div *ngIf="showAddPositionForm" class="card-body">
                                         <button *ngIf="showAddPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showAddPositionForm = !showAddPositionForm">Cancel</button>
                                         <br>
-                                        <form>
+                                        <form #addPositionForm="ngForm">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -233,21 +233,24 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Employee</label>
-                                                        <input type="number" class="form-control" name="employeeId" [(ngModel)]="newPosition.employeeId">
+                                                        <label class="bmd-label-floating">Shift</label>
+                                                        <input type="text" class="form-control" name="shift" [(ngModel)]="newPosition.shift">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Shift</label>
-                                                        <input type="text" class="form-control" name="shift" [(ngModel)]="newPosition.shift">
+                                                        <label style="padding-right: 10px;">Employee:</label>
+                                                        <select class="custom-select" style="width:200px;" name="employeeId" ngModel>
+                                                            <option type="number" value="" disabled selected>Select Employee</option>
+                                                            <option type="number" value=0>None</option>
+                                                            <option type="number" *ngFor="let employee of employees" value={{employee.id}}>{{employee.firstName}} {{employee.lastName}}</option>
+                                                          </select>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <button type="submit" class="btn btn-info pull-left" (click)="addPositionWithDay()" (click)="showAddPositionForm = !showAddPositionForm">Submit New Position</button>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="addPositionWithDay(addPositionForm)" (click)="showAddPositionForm = !showAddPositionForm">Save New Position</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -255,28 +258,36 @@
                                     <div *ngIf="showEditPositionForm" class="card-body">
                                         <button *ngIf="showEditPositionForm" type="submit" class="btn btn-danger pull-right" (click)="showEditPositionForm = false">Cancel</button>
                                         <br>
-                                        <form>
+                                        <form #editPositionForm="ngForm">
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">Title</label>
                                                         <input type="text" class="form-control" name="title" value="positionToEdit.title" [(ngModel)]="positionToEdit.title">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">Shift</label>
                                                         <input type="email" class="form-control" name="shift" value="positionToEdit.shift" [(ngModel)]="positionToEdit.shift">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Employee</label>
-                                                        <input type="number" class="form-control" name="employeeId" value="positionToEdit.employeeId" [(ngModel)]="positionToEdit.employeeId">
+                                                        <label label style="padding-right: 10px;">Employee: </label>
+                                                        <select class="custom-select" style="width:200px;" name="employeeId" ngModel>
+                                                                <option *ngIf="positionToEdit.employee" type="number" value="" style="display:block" selected>{{positionToEdit.employee.firstName}} {{positionToEdit.employee.lastName}} </option>
+                                                                <option type="number" value=0>None</option>
+                                                                <option type="number" *ngFor="let employee of employees" value={{employee.id}}>{{employee.firstName}} {{employee.lastName}}</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-info pull-left" (click)="editPosition()">Submit Edit</button>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="editPosition(editPositionForm)">Save Edit</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -384,7 +395,7 @@
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-info pull-left" (click)="addEmployee()">Submit New Employee</button>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="addEmployee()">Save New Employee</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
@@ -428,7 +439,7 @@
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-info pull-left" (click)="editEmployee()">Submit Edit</button>
+                                            <button type="submit" class="btn btn-info pull-left" (click)="editEmployee()">Save Edit</button>
                                             <div class="clearfix"></div>
                                         </form>
                                     </div>
