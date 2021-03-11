@@ -179,7 +179,7 @@ public class DayPostgresDao implements DayDAO {
     static class SortByShift implements Comparator<Position> {
         @Override
         public int compare(Position a, Position b) {
-            return a.getShift().compareTo(b.getShift());
+            return b.getShift().compareTo(a.getShift());
         }
     }
 

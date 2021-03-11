@@ -135,6 +135,8 @@ public class WeekPostgresDao implements WeekDAO {
         if (getWeekById(id) == null) {
             return false;
         } else {
+            template.execute("DELETE FROM public.\"Day\" " +
+                    "WHERE \"weekId\" = " + id + ";");
             template.execute("DELETE FROM public.\"Week\" " +
                     "WHERE \"id\" = " + id + ";");
             return true;

@@ -169,14 +169,14 @@
                         <button type="submit" class="btn btn-danger pull-right" (click)="viewWeekDiv = true">Back</button>
 
                         <div class="card" *ngFor="let day of days" [day]="day" style="padding-top: 25px;">
-                            <div class="card-header card-header-info" (click)="day.expand = !day.expand">
+                            <div id="top" class="card-header card-header-info" (click)="day.expand = !day.expand" (click)="showAddPositionForm = false" (click)="showEditPositionForm = false">
                                 <h4 class="card-title ">{{day.date}}</h4>
                             </div>
 
                             <div class="card-body" *ngIf="day.expand">
                                 <div class="table-responsive">
 
-                                    <table class="table" *ngIf="!(showAddWeekForm || showEditWeekForm)">
+                                    <table class="table" *ngIf="!(showAddPositionForm || showEditPositionForm)">
 
                                         <thead class=" text-info">
                                             <th>
@@ -211,7 +211,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <button type="submit" class="btn btn-info" (click)="displayAddPosition(day.id)">Add Position&emsp;</button>
+                                                <a href="#top"><button type="submit" class="btn btn-info" (click)="displayAddPosition(day.id)">Add Position&emsp;</button></a>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -253,7 +253,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="bmd-label-floating">Quantity</label>
+                                                        <label class="bmd-label-floating">Amount to create</label>
                                                         <input type="number" class="form-control" name="quantity" ngModel>
                                                     </div>
                                                 </div>
