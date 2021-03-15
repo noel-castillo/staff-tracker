@@ -508,6 +508,9 @@
                                             <th>
                                                 Time
                                             </th>
+                                            <th>
+
+                                            </th>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let position of employeeInView.positions" [position]="position">
@@ -522,6 +525,9 @@
                                                 </td>
                                                 <td>
                                                     {{position.startTime}} - {{position.endTime}}
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-success">Swap</button>
                                                 </td>
                                             </tr>
                                         </tbody>
