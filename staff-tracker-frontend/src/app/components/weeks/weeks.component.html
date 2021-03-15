@@ -505,6 +505,9 @@
                                             <th>
                                                 Shift
                                             </th>
+                                            <th>
+                                                Time
+                                            </th>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let position of employeeInView.positions" [position]="position">
@@ -516,6 +519,9 @@
                                                 </td>
                                                 <td>
                                                     {{position.shift}}
+                                                </td>
+                                                <td>
+                                                    {{position.startTime}} - {{position.endTime}}
                                                 </td>
                                             </tr>
                                         </tbody>
