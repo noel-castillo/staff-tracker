@@ -61,8 +61,8 @@ export class PositionService {
       );
   }
 
-  editPosition(Position: Position, id: number): Observable<Position> {
-    return this.http.put<Position>(this.baseURL + "/positions/" + id, Position, this.httpOptions)
+  editPosition(position: Position, id: number): Observable<Position> {
+    return this.http.put<Position>(this.baseURL + "/positions/" + id, position, this.httpOptions)
       .pipe(
         tap(x => console.log(x)),
         catchError(err => {

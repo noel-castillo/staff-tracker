@@ -39,7 +39,7 @@ class PositionPostgresDaoTests {
         template.update("INSERT INTO \"Employee\" (\"firstName\", \"lastName\", \"email\", \"phone\"," +
                 "\"address\", \"enabled\") VALUES ('Noel', 'Castillo', 'ncastillo@talentpath.com', '(555) 233-6788'," +
                 "'123 Abc Blvd. Alexandria, VA', true)");
-        template.update("INSERT INTO \"Position\" (\"title\", \"employeeId\", \"startTime\", \"endTime\", \"shift\") VALUES ('Server', 1, 10, 18, 'Morning')");
+        template.update("INSERT INTO \"Position\" (\"title\", \"employeeId\", \"startTime\", \"endTime\", \"shift\") VALUES ('Server', 1, '5:30', '2:30', 'Morning')");
 
     }
 
@@ -49,8 +49,8 @@ class PositionPostgresDaoTests {
         Position positionToAdd = new Position();
         positionToAdd.setTitle("Owner");
         positionToAdd.setEmployeeId(1);
-        positionToAdd.setStartTime(5);
-        positionToAdd.setStartTime(13);
+        positionToAdd.setStartTime("5:30");
+        positionToAdd.setStartTime("2:30");
 
         Integer positionId = toTest.addPosition(positionToAdd);
         Position addedPositionToCheck = toTest.getPositionById(2);

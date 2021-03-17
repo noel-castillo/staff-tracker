@@ -232,6 +232,12 @@ export class WeeksComponent implements OnInit {
     this.viewEmployees = false;
   }
 
+//Swap Employee
 
-
+swapEmployee(position: Position, id: number): void {
+  position.employeeId = id;
+  this.positionService.editPosition(position, position.id).subscribe(list => {
+    this.empReload();
+  });
+}
 }

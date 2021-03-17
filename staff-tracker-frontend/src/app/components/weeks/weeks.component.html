@@ -303,13 +303,13 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">Start Time</label>
-                                                        <input type="email" class="form-control" name="startTime" value="positionToEdit.startTime" [(ngModel)]="positionToEdit.shift">
+                                                        <input type="email" class="form-control" name="startTime" value="positionToEdit.startTime" [(ngModel)]="positionToEdit.startTime">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="bmd-label-floating">End Time</label>
-                                                        <input type="email" class="form-control" name="endTime" value="positionToEdit.endTime" [(ngModel)]="positionToEdit.shift">
+                                                        <input type="email" class="form-control" name="endTime" value="positionToEdit.endTime" [(ngModel)]="positionToEdit.endTime">
                                                     </div>
                                                 </div>
                                             </div>
@@ -527,7 +527,12 @@
                                                     {{position.startTime}} - {{position.endTime}}
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-success">Swap</button>
+                                                    <!-- <button type="submit" class="btn btn-success">Swap</button> -->
+                                                    <select class="custom-select" class="btn btn-success" style="width: 100px" name="employeeId" ngModel>
+                                                        <option type="number" value="" disabled selected>Swap</option>
+                                                        <option type="number" >None</option>
+                                                        <option type="number" *ngFor="let employee of employees">{{employee.firstName}} {{employee.lastName}}</option>
+                                                      </select>
                                                 </td>
                                             </tr>
                                         </tbody>
